@@ -1,0 +1,75 @@
+version: '1.0'
+services:
+
+  #PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: community-app
+    restart: always
+    environment:
+      SERVICE_NAME: community-app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    depends_on:
+      - db
+      - webserver
+    networks:
+      - test
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: community-app-web
+    restart: always
+    ports:
+      - "5005:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - test
+
+  #MySQL Service
+  db:
+    image: mysql
+    container_name: community-app-db
+    restart: always
+    ports:
+      - "5405:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    volumes: 
+      - dbdata:/var/lib/mysql
+    networks:
+      - test
+
+  #phpmyadmin for db access
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: community-app-pma
+    environment:
+      PMA_HOST: db
+      UPLOAD_LIMIT: 64M
+    restart: always
+    ports:
+      - 5205:80
+    depends_on:
+      - db
+      - webserver
+    networks:
+      - test
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local 
+
+networks:
+  test: 
+    driver: bridge
