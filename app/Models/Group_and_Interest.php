@@ -5,18 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Content extends Model
+class Group_and_Interest extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'group_id',
-        'content',
-        'created_at',
-        'point',
-        'updated_at',
-        'type',
-        'slug',
+        'interest_id',
     ];
 
     public function group(){
