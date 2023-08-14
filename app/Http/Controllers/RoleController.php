@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Group;
 use App\Models\Role;
+use Illuminate\Http\Request;
 
-class GroupController extends Controller
+class RoleController extends Controller
 {
     public function getGroups(Request $request)
     {
         return response()->json([
-            'group' => Group::with('user:id,name,email_verified_at')->get(),
+            'role' => Role::get(),
         ], 200);
     }
 }
