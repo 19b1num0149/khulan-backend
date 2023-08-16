@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('group_member_and_coupons', function (Blueprint $table) {
+        Schema::create('group_members', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("member_id");
             $table->bigInteger("group_id");
-            $table->string("description");
+            $table->bigInteger("member_id");
+            $table->bigInteger("role_id");
+            $table->date("joined_at");
+            $table->date("left_at");
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('group_member_and_coupons');
+        Schema::dropIfExists('group_members');
     }
 };
