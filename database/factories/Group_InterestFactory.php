@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Permission>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Group_Interest>
  */
-class PermissionFactory extends Factory
+class Group_InterestFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,8 @@ class PermissionFactory extends Factory
     public function definition(): array
     {
         return [
-            'description'=>fake()->sentence()
+            'group_id'=>rand(1,5),
+            'interest_id'=>rand(1,3),
         ];
     }
 }

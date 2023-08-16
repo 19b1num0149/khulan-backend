@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Permission>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User_Point>
  */
-class PermissionFactory extends Factory
+class User_PointFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,9 @@ class PermissionFactory extends Factory
     public function definition(): array
     {
         return [
-            'description'=>fake()->sentence()
+            'user_id'=>rand(1,10),
+            'group_id'=>rand(1,5),
+            'point'=>rand(10,15),
         ];
     }
 }
