@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Events\UserRegistered;
 
 class User extends Authenticatable
 {
@@ -40,6 +41,12 @@ class User extends Authenticatable
         'phone',
         'remember_token',
     ];
+    
+
+    protected $dispatchesEvents = [
+        'created' => UserRegistered::class
+    ];
+
 
     /**
      * The attributes that should be cast.

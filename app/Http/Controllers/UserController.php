@@ -10,8 +10,7 @@ class UserController extends Controller
 {
     public function getUsers(Request $request)
     {
-        return response()->json([
-            'users' => User::with('role:id,permission_id')->get(),
-        ], 200);
+        $users = User::orderBy('id', 'DESC')->limit(5)->get();
+        return response()->json(['users' => $users], 200);
     }
 }
