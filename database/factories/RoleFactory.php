@@ -18,7 +18,7 @@ class RoleFactory extends Factory
     public function definition(): array
     {
         return [
-            'permission_id' => json_encode([Str::random(10)])
+            'permission_id' => json_encode(rand(1,5))
         ];
     }
 }
