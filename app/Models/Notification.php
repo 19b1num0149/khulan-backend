@@ -5,16 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model
+class Notification extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'name',
-        'founded_year',
-        'description',
-        'user_id',
+        'short_text',
+        'content_id',
+        'read_at',
     ];
-    public function user(){
-        return $this->belongsTo(User::class);
+
+    public function content(){
+        return $this->belongsTo(Content::class);
     }
+
 }

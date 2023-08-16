@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('group_and_events', function (Blueprint $table) {
+        Schema::create('group_interests', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("desc");
-            $table->date("date");
-            $table->bigInteger("creator_id");
-            $table->string("location");
+            $table->bigInteger("group_id");
+            $table->bigInteger("interest_id");
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('group_and_event');
+        Schema::dropIfExists('group_interests');
     }
 };
