@@ -5,16 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model
+class Group_Member_Coupon extends Model
 {
     use HasFactory;
+
+    protected $table = 'group_member_coupons';
+
     protected $fillable = [
-        'name',
-        'founded_year',
+        'group_id',
+        'member_id',
         'description',
-        'user_id',
     ];
+
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function group(){
+        return $this->belongsTo(Group::class);
     }
 }

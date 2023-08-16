@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('group_event_and_itineraries', function (Blueprint $table) {
+        Schema::create('group_member_coupons', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("event_id");
-            $table->text("description");
-            $table->text("title");
+            $table->unsignedBigInteger("member_id");
+            $table->foreign('member_id')->references('id')->on('users');
+            $table->bigInteger("group_id");
+            $table->string("description");
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('group_event_and_itineraries');
+        Schema::dropIfExists('group_member_coupons');
     }
 };
