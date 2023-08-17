@@ -5,19 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group_Interest extends Model
+class GroupEventItinerary extends Model
 {
     use HasFactory;
 
-    protected $table = 'group_interests';
-
     protected $fillable = [
-        'group_id',
-        'interest_id',
+        'event_id',
+        'description',
+        'title',
     ];
 
-    public function group()
+    public function event()
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsTo(Group_and_Event::class);
     }
 }
