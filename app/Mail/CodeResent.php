@@ -3,18 +3,23 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
 
 class CodeResent extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $from_email, $name, $numbers, $code;
+    protected $from_email;
+
+    protected $name;
+
+    protected $numbers;
+
+    protected $code;
 
     /**
      * Create a new message instance.
@@ -32,7 +37,7 @@ class CodeResent extends Mailable
      */
     public function envelope(): Envelope
     {
-        return new Envelope (
+        return new Envelope(
             from: new Address($this->from_email, $this->name),
             subject: trans('mail.new_code'),
         );
@@ -48,7 +53,7 @@ class CodeResent extends Mailable
             with: [
                 'name' => $this->name,
                 'code' => $this->code,
-                'numbers' => $this->numbers
+                'numbers' => $this->numbers,
             ]
         );
     }
