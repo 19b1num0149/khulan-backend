@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('group_events', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string("desc");
+            $table->string("description");
             $table->date("date");
-            $table->bigInteger("creator_id");
+            $table->unsignedBigInteger("creator_id");
+            $table->foreign('creator_id')->references('id')->on('users');
             $table->string("location");
             $table->timestamps();
         });

@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Group;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,14 +16,12 @@ class ContentFactory extends Factory
      */
     public function definition(): array
     {
-        $group = Group::inRandomOrder()->first();
-
         return [
-            'group_id' => $group -> id,
-            'body' => fake() -> text(),
-            'point' => fake() -> numberBetween(50-300),
-            'type' => fake() -> text(10),
-            'slug' => fake() -> text(10)
+            'group_id'=>rand(1,5),
+            'body'=>fake()->sentence(),
+            'point'=>rand(1,5),
+            'type'=>fake()->sentence(),
+            'slug'=>fake()->sentence(),
         ];
     }
 }

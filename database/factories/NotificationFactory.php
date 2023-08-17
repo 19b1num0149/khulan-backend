@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Content;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,11 +16,10 @@ class NotificationFactory extends Factory
      */
     public function definition(): array
     {
-        $content = Content::inRandomOrder()->first();
         return [
-            'short_text'=> $content -> body,
-            'content_id' => $content -> id,
-            'read_at' => fake() -> date()
+            'short_text'=>fake()->text(),
+            'content_id'=>rand(1,4),
+            'read_at'=>now(),
         ];
     }
 }

@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Group_Interest>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Group_Event_Itinenary>
  */
-class Group_InterestFactory extends Factory
+class Group_Event_ItinenaryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,9 @@ class Group_InterestFactory extends Factory
     public function definition(): array
     {
         return [
-            'group_id'=>rand(1,5),
-            'interest_id'=>rand(1,3),
+            'event_id'=>rand(1,5),
+            'description'=>fake()->sentence(),
+            'title'=>fake()->sentence(),
         ];
     }
 }
