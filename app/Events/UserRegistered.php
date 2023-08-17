@@ -18,7 +18,8 @@ class UserRegistered
      */
     public function __construct(
         public User $user
-    ) {}
+    ) {
+    }
 
     /**
      * Get the channels the event should broadcast on.

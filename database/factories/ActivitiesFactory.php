@@ -1,4 +1,4 @@
-cle<?php
+<?php
 
 namespace Database\Factories;
 
@@ -17,7 +17,7 @@ class ActivitiesFactory extends Factory
     public function definition(): array
     {
         return [
-            'description' => fake() ->text(20)
+            'description' => fake()->text(20),
         ];
     }
 }
