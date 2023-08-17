@@ -9,13 +9,16 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Group extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
         'founded_year',
         'description',
         'user_id',
     ];
-    public function user(){
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

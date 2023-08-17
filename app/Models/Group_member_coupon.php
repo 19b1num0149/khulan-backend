@@ -17,11 +17,13 @@ class Group_Member_Coupon extends Model
         'description',
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function group(){
+    public function group()
+    {
         return $this->belongsTo(Group::class);
     }
 }

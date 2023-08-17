@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('group_events', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("description");
-            $table->date("date");
-            $table->unsignedBigInteger("creator_id");
+            $table->string('name');
+            $table->string('description');
+            $table->date('date');
+            $table->unsignedBigInteger('creator_id');
             $table->foreign('creator_id')->references('id')->on('users');
-            $table->string("location");
+            $table->string('location');
             $table->timestamps();
         });
     }

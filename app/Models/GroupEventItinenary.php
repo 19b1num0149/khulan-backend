@@ -5,11 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group_Event_Itinenary extends Model
+class GroupEventItinenary extends Model
 {
     use HasFactory;
-
-    protected $table = 'group_event_itineraries';
 
     protected $fillable = [
         'event_id',
@@ -17,8 +15,8 @@ class Group_Event_Itinenary extends Model
         'title',
     ];
 
-    public function event(){
+    public function event()
+    {
         return $this->belongsTo(Group_and_Event::class);
     }
-
 }

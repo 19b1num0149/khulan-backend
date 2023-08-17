@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Client\LoginController;
 // Controllers
-use App\Http\Controllers\Api\Guest\LoginController;
+use Illuminate\Support\Facades\Route;
 
 // Routes
 

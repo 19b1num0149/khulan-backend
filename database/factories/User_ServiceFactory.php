@@ -17,12 +17,12 @@ class User_ServiceFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id'=>rand(1,10),
-            'description'=>fake()->sentence(),
-            'founded_year'=>fake()->year(),
-            'phone'=>fake()->phoneNumber(),
-            'mail'=>fake()->safeEmail(),
-            'service_name'=>fake()->sentence(),
+            'user_id' => rand(1, 10),
+            'description' => fake()->sentence(),
+            'founded_year' => fake()->year(),
+            'phone' => fake()->phoneNumber(),
+            'mail' => fake()->safeEmail(),
+            'service_name' => fake()->sentence(),
         ];
     }
 }
