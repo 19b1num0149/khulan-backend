@@ -5,11 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group_Member_Coupon extends Model
+class GroupMemberCoupon extends Model
 {
     use HasFactory;
-
-    protected $table = 'group_member_coupons';
 
     protected $fillable = [
         'group_id',
