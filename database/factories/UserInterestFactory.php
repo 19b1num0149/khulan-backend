@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Group_Member_Coupon>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserInterest>
  */
-class Group_Member_CouponFactory extends Factory
+class UserInterestFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,8 @@ class Group_Member_CouponFactory extends Factory
     public function definition(): array
     {
         return [
-            'member_id' => rand(1, 10),
-            'group_id' => rand(1, 5),
-            'description' => fake()->sentence(),
+            'user_id' => rand(1, 10),
+            'interest_id' => rand(1, 4),
         ];
     }
 }

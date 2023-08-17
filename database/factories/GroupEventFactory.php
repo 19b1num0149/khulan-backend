@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Group_Event>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\GroupEvent>
  */
-class Group_EventFactory extends Factory
+class GroupEventFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,6 +18,7 @@ class Group_EventFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'group_id' => rand(1, 5),
             'description' => fake()->sentence(),
             'date' => now(),
             'created_at' => now(),

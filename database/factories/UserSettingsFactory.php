@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Group_Event_Itinenary>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserSettings>
  */
-class Group_Event_ItinenaryFactory extends Factory
+class UserSettingsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,10 @@ class Group_Event_ItinenaryFactory extends Factory
     public function definition(): array
     {
         return [
-            'event_id' => rand(1, 5),
-            'description' => fake()->sentence(),
-            'title' => fake()->sentence(),
+            'user_id' => rand(1, 10),
+            'event_off' => 0,
+            'content_on' => 0,
+            'coupon' => 0,
         ];
     }
 }
