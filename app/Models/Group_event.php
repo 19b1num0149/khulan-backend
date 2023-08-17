@@ -17,7 +17,7 @@ class Group_Event extends Model
         'description',
         'date',
         'created_at',
-        'creator',
+        'creator_id',
         'location',
     ];
 
@@ -25,7 +25,7 @@ class Group_Event extends Model
         return $this->belongsTo(Group::class);
     }
     
-    public function user(){
+    public function creator(){
         return $this->belongsTo(User::class);
     }
 }

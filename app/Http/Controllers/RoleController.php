@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    public function getGroups(Request $request)
+    public function getRoles(Request $request)
     {
         return response()->json([
             'role' => Role::get(),

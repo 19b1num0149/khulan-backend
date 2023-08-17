@@ -61,4 +61,8 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo(Role::class);
     }
+
+    public function events(){
+        return $this->hasMany(Group_Event::class, 'creator_id');
+    }
 }
