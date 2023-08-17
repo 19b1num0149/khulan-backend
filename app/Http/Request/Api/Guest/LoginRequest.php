@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Request\Client;
+namespace App\Http\Request\Api\Guest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,7 +24,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone' => 'required',
+            'email' => 'required',
             'password' => 'required',
             'device_name' => 'required',
         ];
@@ -32,7 +32,7 @@ class LoginRequest extends FormRequest
 
     public function messages() {
       return [
-        'phone.required' => 'Утасны дугаар оруулна уу.',
+        'email.required' => 'Утасны дугаар оруулна уу.',
         'password.required' => 'Нууц үг оруулна уу.',
         'device_name.required' => 'Төхөөрөмжийн нэр байхгүй байна.'
       ];

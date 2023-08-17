@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Events\EmailVerified;
 
-class ClientVerification extends Model
+class UserVerification extends Model
 {
     use HasFactory;
 
