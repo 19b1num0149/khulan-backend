@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\User;
 
+
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Group>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User_services>
  */
-class GroupFactory extends Factory
+class User_servicesFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,13 +19,14 @@ class GroupFactory extends Factory
      */
     public function definition(): array
     {
-        $userid = User::inRandomOrder()->first();
+        $user = User::inRandomOrder()->first();
         return [
-            'name' => fake()->name(),
-            'founded_year' => '2022',
             'description' => Str::random(10),
-            'user_id' => $userid->id,
-            'qr_data' => 'null',
+            'founded_year' => '2022',
+            'service_name' => fake()->name(),
+            'user_id' => $user->id,
+            'phone' => $user->phone,
+            'mail' => $user->email
         ];
     }
 }

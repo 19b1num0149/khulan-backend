@@ -17,14 +17,8 @@ class UserRegistered
      * Create a new event instance.
      */
     public function __construct(
-<<<<<<< HEAD
         public User $user
     ) {}
-=======
-        public User $client
-    ) {
-    }
->>>>>>> community-app-backend-main
 
     /**
      * Get the channels the event should broadcast on.
