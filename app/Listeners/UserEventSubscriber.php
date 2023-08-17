@@ -1,24 +1,23 @@
 <?php
- 
+
 namespace App\Listeners;
  
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 use App\Events\UserRegistered as UserRegisteredEvent;
 use App\Events\ResendCode;
 use App\Mail\UserRegistered as UserRegisteredMail;
 use App\Mail\CodeResent;
 use App\Models\UserVerification;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Events\Dispatcher;
  
 class UserEventSubscriber
 {
-
     protected $code;
-    
+
     /**
      * Create the event listener.
      */
@@ -53,7 +52,6 @@ class UserEventSubscriber
                 $hashedCode));
         }
 
-        
     }
 
     /**
@@ -63,15 +61,15 @@ class UserEventSubscriber
     {
         $this->sendEmail($event, 'registered');
     }
- 
+
     /**
      * Handle Resend Code Event.
      */
-    public function handleResendCode($event): void 
+    public function handleResendCode($event): void
     {
         $this->sendEmail($event, 'newcode');
     }
- 
+
     /**
      * Register the listeners for the subscriber.
      */
@@ -81,7 +79,7 @@ class UserEventSubscriber
             UserRegisteredEvent::class,
             [UserEventSubscriber::class, 'handleUserRegistered']
         );
- 
+
         $events->listen(
             ResendCode::class,
             [UserEventSubscriber::class, 'handleResendCode']

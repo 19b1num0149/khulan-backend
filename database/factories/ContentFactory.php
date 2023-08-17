@@ -17,11 +17,11 @@ class ContentFactory extends Factory
     public function definition(): array
     {
         return [
-            'group_id'=>rand(1,5),
-            'body'=>fake()->sentence(),
-            'point'=>rand(1,5),
-            'type'=>fake()->sentence(),
-            'slug'=>fake()->sentence(),
+            'group_id' => rand(1, 5),
+            'body' => fake()->sentence(),
+            'point' => rand(1, 5),
+            'type' => fake()->sentence(),
+            'slug' => fake()->sentence(),
         ];
     }
 }

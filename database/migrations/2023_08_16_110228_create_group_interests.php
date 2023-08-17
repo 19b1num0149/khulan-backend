@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('group_interests', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("group_id");
-            $table->bigInteger("interest_id");
+            $table->bigInteger('group_id');
+            $table->bigInteger('interest_id');
             $table->timestamps();
         });
     }

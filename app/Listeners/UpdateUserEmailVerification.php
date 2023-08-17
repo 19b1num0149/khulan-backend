@@ -2,23 +2,18 @@
 
 namespace App\Listeners;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Mail;
 use App\Events\EmailVerified;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
 
 class UpdateUserEmailVerification
 {
-   
     /**
      * Create the event listener.
      */
     public function __construct()
     {
-        
+
     }
 
     /**
@@ -34,6 +29,6 @@ class UpdateUserEmailVerification
             $user->active = 1;
             $user->save();
         }
-        
+
     }
 }

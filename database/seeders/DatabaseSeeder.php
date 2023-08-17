@@ -20,7 +20,6 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\User_Point;
 use App\Models\User_Service;
-use GuzzleHttp\Promise\Create;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

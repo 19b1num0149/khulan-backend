@@ -17,9 +17,9 @@ class Group_Event_ItinenaryFactory extends Factory
     public function definition(): array
     {
         return [
-            'event_id'=>rand(1,5),
-            'description'=>fake()->sentence(),
-            'title'=>fake()->sentence(),
+            'event_id' => rand(1, 5),
+            'description' => fake()->sentence(),
+            'title' => fake()->sentence(),
         ];
     }
 }

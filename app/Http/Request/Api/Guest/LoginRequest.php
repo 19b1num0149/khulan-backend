@@ -37,5 +37,4 @@ class LoginRequest extends FormRequest
         'device_name.required' => 'Төхөөрөмжийн нэр байхгүй байна.'
       ];
     }
-
 }

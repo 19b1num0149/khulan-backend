@@ -5,23 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User_Point extends Model
+class GroupMember extends Model
 {
     use HasFactory;
 
-    protected $table = 'user_points';
-
     protected $fillable = [
         'group_id',
-        'user_id',
-        'point',
+        'member_id',
+        'activity_id',
+        'role_id',
+        'joined_at',
+        'left_at',
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function group(){
+    public function group()
+    {
         return $this->belongsTo(Group::class);
     }
 }

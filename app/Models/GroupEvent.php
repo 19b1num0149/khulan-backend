@@ -5,11 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group_Event extends Model
+class GroupEvent extends Model
 {
     use HasFactory;
-
-    protected $table = 'group_events';
 
     protected $fillable = [
         'group_id',
@@ -17,15 +15,17 @@ class Group_Event extends Model
         'description',
         'date',
         'created_at',
-        'creator',
+        'creator_id',
         'location',
     ];
 
-    public function group(){
+    public function group()
+    {
         return $this->belongsTo(Group::class);
     }
-    
-    public function user(){
+
+    public function creator()
+    {
         return $this->belongsTo(User::class);
     }
 }

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('user_points', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("user_id");
-            $table->bigInteger("group_id");
-            $table->bigInteger("point");
+            $table->bigInteger('user_id');
+            $table->bigInteger('group_id');
+            $table->bigInteger('point');
             $table->timestamps();
         });
     }

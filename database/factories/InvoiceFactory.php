@@ -17,15 +17,15 @@ class InvoiceFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id'=>rand(1,10),
-            'group_id'=>rand(1,5),
-            'activity_id'=>rand(1,3),
-            'amount'=>rand(100,200),
-            'generated_at'=>now(),
-            'due_at'=>now(),
-            'canceled_at'=>now(),
-            'paid_at'=>now(),
-            'point'=>rand(50,60),
+            'user_id' => rand(1, 10),
+            'group_id' => rand(1, 5),
+            'activity_id' => rand(1, 3),
+            'amount' => rand(100, 200),
+            'generated_at' => now(),
+            'due_at' => now(),
+            'canceled_at' => now(),
+            'paid_at' => now(),
+            'point' => rand(50, 60),
         ];
     }
 }
