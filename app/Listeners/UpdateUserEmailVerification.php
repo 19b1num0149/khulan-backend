@@ -6,11 +6,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 use App\Events\EmailVerified;
-use App\Models\Client;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
-class UpdateClientEmailVerification
+class UpdateUserEmailVerification
 {
    
     /**
@@ -29,10 +29,10 @@ class UpdateClientEmailVerification
         $verified = $event->verified;
         
         if(!is_null($verified->used_at)) {
-            $client = Client::where('email', $verified->email)->whereNull('email_verified_at')->first();
-            $client->email_verified_at = Carbon::now();
-            $client->active = 1;
-            $client->save();
+            $user = User::where('email', $verified->email)->whereNull('email_verified_at')->first();
+            $user->email_verified_at = Carbon::now();
+            $user->active = 1;
+            $user->save();
         }
         
     }
