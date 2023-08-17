@@ -8,9 +8,9 @@ use App\Models\User;
 
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User_and_services>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User_services>
  */
-class User_and_servicesFactory extends Factory
+class User_servicesFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,7 +20,6 @@ class User_and_servicesFactory extends Factory
     public function definition(): array
     {
         $user = User::inRandomOrder()->first();
-
         return [
             'description' => Str::random(10),
             'founded_year' => '2022',
