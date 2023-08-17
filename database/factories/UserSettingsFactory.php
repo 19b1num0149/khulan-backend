@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User_Point>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserSettings>
  */
-class User_PointFactory extends Factory
+class UserSettingsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +18,9 @@ class User_PointFactory extends Factory
     {
         return [
             'user_id' => rand(1, 10),
-            'group_id' => rand(1, 5),
-            'point' => rand(10, 15),
+            'event_off' => 0,
+            'content_on' => 0,
+            'coupon' => 0,
         ];
     }
 }

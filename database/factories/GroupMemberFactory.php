@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Group_Interest>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\GroupMember>
  */
-class Group_InterestFactory extends Factory
+class GroupMemberFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,10 @@ class Group_InterestFactory extends Factory
     {
         return [
             'group_id' => rand(1, 5),
-            'interest_id' => rand(1, 3),
+            'member_id' => rand(1, 10),
+            'role_id' => rand(1, 3),
+            'joined_at' => now(),
+            'left_at' => now(),
         ];
     }
 }

@@ -3,11 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-use App\Models\User;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User_and_services>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserService>
  */
 class UserServiceFactory extends Factory
 {
@@ -18,14 +16,13 @@ class UserServiceFactory extends Factory
      */
     public function definition(): array
     {
-        $user = User::inRandomOrder()->first();
         return [
-            'description' => Str::random(10),
-            'founded_year' => '2022',
-            'service_name' => fake()->name(),
-            'user_id'=> $user->id,
-            'phone' => $user->phone,
-            'mail' => $user->email
+            'user_id' => rand(1, 10),
+            'description' => fake()->sentence(),
+            'founded_year' => fake()->year(),
+            'phone' => fake()->phoneNumber(),
+            'mail' => fake()->safeEmail(),
+            'service_name' => fake()->sentence(),
         ];
     }
 }

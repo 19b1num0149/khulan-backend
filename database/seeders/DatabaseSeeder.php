@@ -7,19 +7,21 @@ namespace Database\Seeders;
 use App\Models\Activity;
 use App\Models\Content;
 use App\Models\Group;
-use App\Models\Group_Event;
-use App\Models\Group_Event_Itinenary;
-use App\Models\Group_Interest;
-use App\Models\Group_Member;
-use App\Models\Group_Member_Coupon;
+use App\Models\GroupEvent;
+use App\Models\GroupEventItinerary;
+use App\Models\GroupInterest;
+use App\Models\GroupMember;
+use App\Models\GroupMemberCoupon;
 use App\Models\Interest;
 use App\Models\Invoice;
 use App\Models\Notification;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
-use App\Models\User_Point;
-use App\Models\User_Service;
+use App\Models\UserInterest;
+use App\Models\UserPoint;
+use App\Models\UserService;
+use App\Models\UserSettings;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -36,14 +38,16 @@ class DatabaseSeeder extends Seeder
         Invoice::factory(3)->create();
         Activity::factory(3)->create();
         Content::factory(4)->create();
-        Group_Member::factory(10)->create();
-        Group_Member_Coupon::factory(3)->create();
-        User_Point::factory(4)->create();
-        Group_Interest::factory(4)->create();
+        GroupMember::factory(10)->create();
+        GroupMemberCoupon::factory(3)->create();
+        UserPoint::factory(4)->create();
+        GroupInterest::factory(4)->create();
         Interest::factory(4)->create();
-        Group_Event_Itinenary::factory(3)->create();
-        Group_Event::factory(3)->create();
+        GroupEventItinerary::factory(3)->create();
+        GroupEvent::factory(3)->create();
         Notification::factory(3)->create();
-        User_Service::factory(3)->create();
+        UserService::factory(3)->create();
+        UserInterest::factory(5)->create();
+        UserSettings::factory(5)->create();
     }
 }

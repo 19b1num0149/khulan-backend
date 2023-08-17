@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User_Point>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\GroupEventItinerary>
  */
-class User_PointFactory extends Factory
+class GroupEventItineraryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,9 @@ class User_PointFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => rand(1, 10),
-            'group_id' => rand(1, 5),
-            'point' => rand(10, 15),
+            'event_id' => rand(1, 5),
+            'description' => fake()->sentence(),
+            'title' => fake()->sentence(),
         ];
     }
 }
