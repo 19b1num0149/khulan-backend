@@ -9,7 +9,6 @@ return [
     'verification_code' => 'Таны баталгаажуулах код',
     'verification_code_lifetime' => 'Дээрх баталгаажуулах код 5 минут хүчинтэй байна.',
 
-    
     'company_name' => 'Khentii NZ',
 
 ];
