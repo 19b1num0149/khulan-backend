@@ -17,12 +17,12 @@ class Group_EventFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=>fake()->name(),
-            'description'=>fake()->sentence(),
-            'date'=>now(),
-            'created_at'=>now(),
-            'creator_id'=>rand(1,10),
-            'location'=>fake()->sentence(),
+            'name' => fake()->name(),
+            'description' => fake()->sentence(),
+            'date' => now(),
+            'created_at' => now(),
+            'creator_id' => rand(1, 10),
+            'location' => fake()->sentence(),
         ];
     }
 }

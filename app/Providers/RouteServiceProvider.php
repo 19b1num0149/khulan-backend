@@ -29,18 +29,20 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
+            // for REST API
             Route::middleware('api')
                 ->prefix('api/community')
                 ->group(base_path('routes/api/community.php'));
-                
+
             Route::middleware('api')
                 ->prefix('api/guest')
                 ->group(base_path('routes/api/guest.php'));
-            
+
             Route::middleware('api')
                 ->prefix('api/private')
                 ->group(base_path('routes/api/private.php'));
 
+            // For Web Interface
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });

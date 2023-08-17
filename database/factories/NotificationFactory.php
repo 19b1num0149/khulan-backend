@@ -17,9 +17,9 @@ class NotificationFactory extends Factory
     public function definition(): array
     {
         return [
-            'short_text'=>fake()->text(),
-            'content_id'=>rand(1,4),
-            'read_at'=>now(),
+            'short_text' => fake()->text(),
+            'content_id' => rand(1, 4),
+            'read_at' => now(),
         ];
     }
 }

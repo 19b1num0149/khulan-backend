@@ -3,12 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Events\UserRegistered;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Events\UserRegistered;
 
 class User extends Authenticatable
 {
@@ -41,12 +40,10 @@ class User extends Authenticatable
         'phone',
         'remember_token',
     ];
-    
 
     protected $dispatchesEvents = [
-        'created' => UserRegistered::class
+        'created' => UserRegistered::class,
     ];
-
 
     /**
      * The attributes that should be cast.
@@ -58,11 +55,13 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function role(){
+    public function role()
+    {
         return $this->belongsTo(Role::class);
     }
 
-    public function events(){
+    public function events()
+    {
         return $this->hasMany(Group_Event::class, 'creator_id');
     }
 }

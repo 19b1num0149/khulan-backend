@@ -3,30 +3,25 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
-
 use App\Http\Request\Guest\LoginRequest;
-use App\Http\Request\Guest\RegisterRequest;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
-class LoginController extends Controller {
-
+class LoginController extends Controller
+{
     // public function authenticate(LoginRequest $request) {
 
     //     $user = User::where('phone', $request->phone)->first();
 
-        
     //     if (!$user || !Hash::check($request->password, $user->password)) {
-    //         return response()->json(['msg' => 'Утасны дугаар эсвэл нууц үг буруу байна.'], 200 );   
+    //         return response()->json(['msg' => 'Утасны дугаар эсвэл нууц үг буруу байна.'], 200 );
     //     }
 
     //     if($user->is_active == 0) {
-    //         return response()->json(['code' => '3000', 
+    //         return response()->json(['code' => '3000',
     //                                  'msg' => 'Хаяг идэвхгүй байна'], 200);
     //     }
 
@@ -83,5 +78,5 @@ class LoginController extends Controller {
     //     return response()->json(['msg' => 'Системээс гарлаа.'], 200);
 
     // }
-    
-} 
+
+}
