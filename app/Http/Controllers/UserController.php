@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function getUsers(Request $request)
     {
-        $users = User::orderBy('id', 'DESC')->limit(5)->get();
+        $users = User::paginate(15);
         return response()->json(['users' => $users], 200);
     }
 }
