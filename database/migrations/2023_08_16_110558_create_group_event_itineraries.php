@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('group_event_itineraries', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("event_id");
-            $table->text("description");
-            $table->text("title");
+            $table->unsignedBigInteger('event_id');
+            $table->text('description');
+            $table->text('title');
             $table->timestamps();
         });
     }

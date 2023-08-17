@@ -17,9 +17,9 @@ class Group_Member_CouponFactory extends Factory
     public function definition(): array
     {
         return [
-            'member_id'=>rand(1,10),
-            'group_id'=>rand(1,5),
-            'description'=>fake()->sentence(),
+            'member_id' => rand(1, 10),
+            'group_id' => rand(1, 5),
+            'description' => fake()->sentence(),
         ];
     }
 }

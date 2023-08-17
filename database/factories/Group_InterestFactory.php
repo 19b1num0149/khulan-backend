@@ -17,8 +17,8 @@ class Group_InterestFactory extends Factory
     public function definition(): array
     {
         return [
-            'group_id'=>rand(1,5),
-            'interest_id'=>rand(1,3),
+            'group_id' => rand(1, 5),
+            'interest_id' => rand(1, 3),
         ];
     }
 }

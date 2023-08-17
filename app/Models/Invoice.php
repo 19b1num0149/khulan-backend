@@ -21,15 +21,18 @@ class Invoice extends Model
         'point',
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function group(){
+    public function group()
+    {
         return $this->belongsTo(Group::class);
     }
 
-    public function activity(){
+    public function activity()
+    {
         return $this->belongsTo(Activity::class);
     }
 }

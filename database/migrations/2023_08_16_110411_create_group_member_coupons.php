@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('group_member_coupons', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("member_id");
+            $table->unsignedBigInteger('member_id');
             $table->foreign('member_id')->references('id')->on('users');
-            $table->bigInteger("group_id");
-            $table->string("description");
+            $table->bigInteger('group_id');
+            $table->string('description');
             $table->timestamps();
         });
     }

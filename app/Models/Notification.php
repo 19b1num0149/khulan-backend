@@ -15,8 +15,8 @@ class Notification extends Model
         'read_at',
     ];
 
-    public function content(){
+    public function content()
+    {
         return $this->belongsTo(Content::class);
     }
-
 }

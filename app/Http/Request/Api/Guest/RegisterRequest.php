@@ -30,12 +30,12 @@ class RegisterRequest extends FormRequest
         ];
     }
 
-    public function messages() {
-      return [
-        'name.required' => 'Нэр оруулна уу',
-        'phone.required' => 'Утасны дугаар оруулна уу.',
-        'password.required' => 'Нууц үг оруулна уу.',
-      ];
+    public function messages()
+    {
+        return [
+            'name.required' => 'Нэр оруулна уу',
+            'phone.required' => 'Утасны дугаар оруулна уу.',
+            'password.required' => 'Нууц үг оруулна уу.',
+        ];
     }
-
 }
