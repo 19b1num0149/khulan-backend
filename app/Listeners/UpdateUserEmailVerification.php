@@ -22,8 +22,8 @@ class UpdateUserEmailVerification
     public function handle(EmailVerified $event): void
     {
         $verified = $event->verified;
-        
-        if(!is_null($verified->used_at)) {
+
+        if (! is_null($verified->used_at)) {
             $user = User::where('email', $verified->email)->whereNull('email_verified_at')->first();
             $user->email_verified_at = Carbon::now();
             $user->active = 1;

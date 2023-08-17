@@ -30,11 +30,12 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    public function messages() {
-      return [
-        'email.required' => 'Утасны дугаар оруулна уу.',
-        'password.required' => 'Нууц үг оруулна уу.',
-        'device_name.required' => 'Төхөөрөмжийн нэр байхгүй байна.'
-      ];
+    public function messages()
+    {
+        return [
+            'email.required' => 'Утасны дугаар оруулна уу.',
+            'password.required' => 'Нууц үг оруулна уу.',
+            'device_name.required' => 'Төхөөрөмжийн нэр байхгүй байна.',
+        ];
     }
 }
