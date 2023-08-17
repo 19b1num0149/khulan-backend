@@ -15,5 +15,21 @@ class PrivateController extends Controller
         return response()->json(['msg' => 'Success' , 'data' => $user], 200);
 
     }
+
+    public function postUser(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'phone' => 'required|string|unique:users',
+            'address' => 'nullable|string',
+            'age' => 'nullable|integer|min:0',
+            'gender' => 'nullable|in:male,female,other',
+        ]);
+
+        $user = User::create($data);
+
+        return response()->json(['msg' => 'success', 'data' => $user], 200);
+    }
 }
  

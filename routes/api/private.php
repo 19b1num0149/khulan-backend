@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [LoginController::class, 'logout']);
-
     Route::get('/authuser/{id}' , [PrivateController::class , 'getUser']);
+    Route::post('/profile' , [PrivateController::class , 'postUser']);
 
 });
