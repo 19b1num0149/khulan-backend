@@ -5,11 +5,13 @@ namespace App\Events;
 use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UserRegistered
+class ResendCode
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -17,14 +19,8 @@ class UserRegistered
      * Create a new event instance.
      */
     public function __construct(
-<<<<<<< HEAD
         public User $user
     ) {}
-=======
-        public User $client
-    ) {
-    }
->>>>>>> community-app-backend-main
 
     /**
      * Get the channels the event should broadcast on.

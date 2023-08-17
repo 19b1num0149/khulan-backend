@@ -1,18 +1,20 @@
 <?php
 
 namespace App\Listeners;
-
-use App\Events\ClientRegistered as ClientRegisteredEvent;
+ 
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
+use App\Events\UserRegistered as UserRegisteredEvent;
 use App\Events\ResendCode;
-use App\Mail\ClientRegistered as ClientRegisteredMail;
+use App\Mail\UserRegistered as UserRegisteredMail;
 use App\Mail\CodeResent;
-use App\Models\ClientVerification;
+use App\Models\UserVerification;
 use Carbon\Carbon;
 use Illuminate\Events\Dispatcher;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-
-class ClientEventSubscriber
+ 
+class UserEventSubscriber
 {
     protected $code;
 
@@ -21,15 +23,15 @@ class ClientEventSubscriber
      */
     public function __construct()
     {
-        $this->code = rand(1000, 9999);
+        $this->code = rand(100000, 999999);
     }
 
     protected function sendEmail($event, $type): void
     {
-        $client = $event->client;
-
-        $verification = new ClientVerification;
-        $verification->email = $client->email;
+        $user = $event->user;
+        
+        $verification = new UserVerification;
+        $verification->email = $user->email;
         $verification->code = $this->code;
         $verification->expired_at = Carbon::now()->addMinutes(5);
         $verification->save();
@@ -37,16 +39,15 @@ class ClientEventSubscriber
         $numbersArray = str_split($this->code);
         $hashedCode = Hash::make($this->code);
 
-        if ($type == 'registered') {
-            Mail::to($client->email)->send(new ClientRegisteredMail($client->company_id,
-                $client->name,
+
+        if($type=='registered') {
+            Mail::to($user->email)->send(new UserRegisteredMail($user->name,
                 $numbersArray,
                 $hashedCode));
         }
 
-        if ($type == 'newcode') {
-            Mail::to($client->email)->send(new CodeResent($client->company_id,
-                $client->name,
+        if($type=='newcode') {            
+            Mail::to($user->email)->send(new CodeResent($user->name,
                 $numbersArray,
                 $hashedCode));
         }
@@ -54,9 +55,9 @@ class ClientEventSubscriber
     }
 
     /**
-     * Handle Client Registered Event.
+     * Handle user Registered Event.
      */
-    public function handleClientRegistered($event): void
+    public function handleUserRegistered($event): void 
     {
         $this->sendEmail($event, 'registered');
     }
@@ -75,13 +76,13 @@ class ClientEventSubscriber
     public function subscribe(Dispatcher $events): void
     {
         $events->listen(
-            ClientRegisteredEvent::class,
-            [ClientEventSubscriber::class, 'handleClientRegistered']
+            UserRegisteredEvent::class,
+            [UserEventSubscriber::class, 'handleUserRegistered']
         );
 
         $events->listen(
             ResendCode::class,
-            [ClientEventSubscriber::class, 'handleResendCode']
+            [UserEventSubscriber::class, 'handleResendCode']
         );
     }
 }

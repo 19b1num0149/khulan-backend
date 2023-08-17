@@ -3,10 +3,10 @@
 namespace App\Listeners;
 
 use App\Events\EmailVerified;
-use App\Models\Client;
+use App\Models\User;
 use Carbon\Carbon;
 
-class UpdateClientEmailVerification
+class UpdateUserEmailVerification
 {
     /**
      * Create the event listener.
@@ -22,12 +22,12 @@ class UpdateClientEmailVerification
     public function handle(EmailVerified $event): void
     {
         $verified = $event->verified;
-
-        if (! is_null($verified->used_at)) {
-            $client = Client::where('email', $verified->email)->whereNull('email_verified_at')->first();
-            $client->email_verified_at = Carbon::now();
-            $client->active = 1;
-            $client->save();
+        
+        if(!is_null($verified->used_at)) {
+            $user = User::where('email', $verified->email)->whereNull('email_verified_at')->first();
+            $user->email_verified_at = Carbon::now();
+            $user->active = 1;
+            $user->save();
         }
 
     }
