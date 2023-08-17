@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('group_member_coupons', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("member_id");
-            $table->bigInteger("group_id");
-            $table->string("description");
+            $table->string('email');
+            $table->string('code', 50);
+            $table->dateTime('used_at')->nullable();
+            $table->dateTime('expired_at');
             $table->timestamps();
         });
     }

@@ -28,10 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-<<<<<<<< HEAD:database/migrations/2023_08_14_110557_create_group_members_table.php
-        Schema::dropIfExists('group_member');
-========
         Schema::dropIfExists('group_members');
->>>>>>>> e6ac7f4 (fixed):database/migrations/2023_08_16_110211_create_group_members.php
     }
 };
