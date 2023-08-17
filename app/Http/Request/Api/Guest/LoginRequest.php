@@ -33,7 +33,7 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'phone.required' => 'Утасны дугаар оруулна уу.',
+            'email.required' => 'Утасны дугаар оруулна уу.',
             'password.required' => 'Нууц үг оруулна уу.',
             'device_name.required' => 'Төхөөрөмжийн нэр байхгүй байна.',
         ];

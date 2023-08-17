@@ -20,22 +20,22 @@ class StrongPassword implements ValidationRule
         }
 
         // Password must contain at least one uppercase letter
-        if (!preg_match('/[A-Z]/', $value)) {
+        if (! preg_match('/[A-Z]/', $value)) {
             $fail(' Contain at least one uppercase letter');
         }
 
         // Password must contain at least one lowercase letter
-        if (!preg_match('/[a-z]/', $value)) {
+        if (! preg_match('/[a-z]/', $value)) {
             $fail(' Contain at least one lowercase letter');
         }
 
         // Password must contain at least one number
-        if (!preg_match('/[0-9]/', $value)) {
+        if (! preg_match('/[0-9]/', $value)) {
             $fail(' Contain at least one number');
         }
 
         // Password must contain at least one special character
-        if (!preg_match('/[!@#$%^&*()\-_=+{}[\]:;<>.,?~]/', $value)) {
+        if (! preg_match('/[!@#$%^&*()\-_=+{}[\]:;<>.,?~]/', $value)) {
             $fail(' Contain at least one special character');
         }
 
