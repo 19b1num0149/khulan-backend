@@ -1,82 +1,86 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Api\Guest;
 
 use App\Http\Controllers\Controller;
-use App\Http\Request\Guest\LoginRequest;
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
-class LoginController extends Controller
-{
-    // public function authenticate(LoginRequest $request) {
+use App\Http\Request\Api\Guest\LoginRequest;
+use App\Http\Request\Api\Guest\RegisterRequest;
+use App\Models\User;
 
-    //     $user = User::where('phone', $request->phone)->first();
+use App\Rules\StrongPassword;
 
-    //     if (!$user || !Hash::check($request->password, $user->password)) {
-    //         return response()->json(['msg' => 'Утасны дугаар эсвэл нууц үг буруу байна.'], 200 );
-    //     }
+class LoginController extends Controller {
 
-    //     if($user->is_active == 0) {
-    //         return response()->json(['code' => '3000',
-    //                                  'msg' => 'Хаяг идэвхгүй байна'], 200);
-    //     }
+    public function authenticate(LoginRequest $request) {
 
-    //     return response()->json(['code' => '1000',
-    //                              'token' => $user->createToken($request->device_name)->plainTextToken,
-    //                              'profile' => $user], 200);
-    // }
+        $user = User::where('email', $request->email)->first();
 
-    // public function registerByEmail(Request $request)
-    // {
-    //     $request->validate([
-    //         'name' => 'required',
-    //         'email' => 'required|email|unique:clients',
-    //         'password' => ['required', new StrongPassword]
-    //     ]);
+        
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json(['msg' => 'Утасны дугаар эсвэл нууц үг буруу байна.'], 200 );   
+        }
 
-    //     Client::create([
-    //         'name' => $request->name,
-    //         'email' => $request->email,
-    //         'password' => $request->password,
-    //         'company_id' => $request->header('Company-Id'),
-    //         'active' => 0 ]);
+        if($user->email_verified_at == null) {
+            return response()->json(['msg' => 'Хаяг идэвхгүй байна'], 200);
+        }
 
-    //     return response()->json(['msg' => 'Амжилттай бүртэглээ.'], 200);
-    // }
+        return response()->json(['token' => $user->createToken($request->device_name)->plainTextToken,
+                                 'profile' => $user], 200);
+    }
 
-    // public function activate_account(Request $request) {
+    public function registerByEmail(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => ['required', new StrongPassword]
+        ]);
 
-    //     $code = DB::table('users_verifications')
-    //               ->select('code')
-    //               ->where('email', $request->email)
-    //               ->where('expired_at', '>=', Carbon::now())
-    //               ->orderBy('created_at', 'DESC')
-    //               ->first();
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'phone' => $request->phone ]);
 
-    //     if($code == null) {
-    //         return response()->json(['msg' => 'Код илгээгдээгүй байна.'], 200);
-    //     }
+        return response()->json(['msg' => 'Амжилттай бүртэглээ.'], 200);
+    }
 
-    //     if($code->code == $request->code) {
-    //         $verification = User::where('email' , $request->email)->first();
-    //         $verification->used_at = Carbon::now();
-    //         $verification->save();
-    //         return response()->json(['msg' => 'Амжилттай.'], 200);
-    //     }
+    public function activate_account(Request $request) {
 
-    //     return response()->json(['msg' => 'Код таарахгүй байна.'], 200);
+        $code = DB::table('user_verifications')
+                  ->select('code')
+                  ->where('email', $request->email)
+                  ->where('expired_at', '>=', Carbon::now())
+                  ->orderBy('created_at', 'DESC')
+                  ->first();
 
-    // }
+        if($code == null) {
+            return response()->json(['msg' => 'Код илгээгдээгүй байна.'], 200);
+        }
 
-    // public function logout(Request $request) {
+        if($code->code == $request->code) {
+            $verification = User::where('email' , $request->email)->first();
+            $verification->email_verified_at = Carbon::now();
+            $verification->save();
+            return response()->json(['msg' => 'Амжилттай.'], 200);
+        }
 
-    //     $request->user()->tokens()->delete();
-    //     return response()->json(['msg' => 'Системээс гарлаа.'], 200);
+        return response()->json(['msg' => 'Код таарахгүй байна.'], 200);
 
-    // }
+    }
 
+    public function logout(Request $request) {
+
+        $request->user()->tokens()->delete();
+        return response()->json(['msg' => 'Системээс гарлаа.'], 200);
+
+    }
+    
 }
