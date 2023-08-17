@@ -15,7 +15,7 @@ class GroupMemberCoupon extends Model
         'description',
     ];
 
-    public function user()
+    public function member()
     {
         return $this->belongsTo(User::class);
     }
