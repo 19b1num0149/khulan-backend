@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('user_services', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("user_id");
-            $table->string("description");
-            $table->year("founded_year");
-            $table->string("phone");
-            $table->string("mail");
-            $table->string("service_name");
+            $table->bigInteger('user_id');
+            $table->string('description');
+            $table->year('founded_year');
+            $table->string('phone');
+            $table->string('mail');
+            $table->string('service_name');
             $table->timestamps();
         });
     }
