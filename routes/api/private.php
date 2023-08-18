@@ -8,6 +8,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [LoginController::class, 'logout']);
     Route::get('/authuser/{id}' , [PrivateController::class , 'getUser']);
-    Route::post('/profile' , [PrivateController::class , 'postUser']);
+    Route::post('/profile/{id}' , [PrivateController::class , 'postUser']);
+    Route::get('/user-interest/{user_id}' , [PrivateController::class , 'getUserInterest']);
+    Route::post('/add-user-interest/{user_id}' , [PrivateController::class , 'postUserInterest']);
+    Route::get('/user-groups/{user_id}' , [PrivateController::class , 'getUserGroups']);
+    Route::get('/user/{user_id}/group/{group_id}/joined' , [PrivateController::class , 'getJoinedGroupOfUser']);
 
 });
