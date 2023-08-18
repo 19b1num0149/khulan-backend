@@ -13,6 +13,7 @@ class MemberController extends Controller
         $group_id = $request->group_id;
         $members = GroupMember::with(['group:id,name', 'member:id,name'])
             ->select('group_id', 'member_id', 'role_id', 'joined_at', 'left_at')
+            ->orderBy('joined_at', 'desc')
             ->where('group_id', $group_id)
             ->simplePaginate(15);
 

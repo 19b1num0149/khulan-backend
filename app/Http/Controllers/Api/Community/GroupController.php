@@ -12,7 +12,8 @@ class GroupController extends Controller
     public function getGroups(Request $request)
     {
         $groups = Group::with(['user:id,name'])
-            ->select('id', 'name', 'founded_year', 'description', 'user_id')
+            ->select('id', 'name', 'founded_year', 'description', 'user_id', 'created_at')
+            ->orderBy('created_at', 'desc')
             ->simplePaginate(15);
 
         return response()->json(['groups' => $groups], 200);
