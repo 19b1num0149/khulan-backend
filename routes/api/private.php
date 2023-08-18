@@ -1,15 +1,14 @@
 <?php
 
 use App\Http\Controllers\Api\Guest\LoginController;
-use App\Http\Controllers\Api\Private\PrivateController;
+use app\Http\Controllers\Api\Private\GroupController;
+use app\Http\Controllers\Api\Private\InterestController;
 use App\Http\Controllers\Api\Private\ProfileController;
-use App\Http\Controllers\Api\Private\InterestController;
-use App\Http\Controllers\Api\Private\GroupController;
-
 use App\Http\Controllers\Api\Private\SettingsController;
 use App\Http\Controllers\Api\Private\NotificationController;
 use App\Http\Controllers\Api\Private\PaymentController;
 use App\Http\Controllers\Api\Private\ContentController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -36,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Content
     Route::get('/user/content/{id}' , [ContentController::class , 'getData']);
+
 
 
 });
