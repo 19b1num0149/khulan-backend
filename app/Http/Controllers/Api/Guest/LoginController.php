@@ -19,7 +19,7 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
-            return response()->json(['msg' => 'Утасны дугаар эсвэл нууц үг буруу байна.'], 200);
+            return response()->json(['msg' => 'И-мэйл эсвэл нууц үг буруу байна.'], 200);
         }
 
         if ($user->email_verified_at == null) {
@@ -70,15 +70,6 @@ class LoginController extends Controller
         }
 
         return response()->json(['msg' => 'Код таарахгүй байна.'], 200);
-
-    }
-
-    public function logout(Request $request)
-    {
-
-        $request->user()->tokens()->delete();
-
-        return response()->json(['msg' => 'Системээс гарлаа.'], 200);
 
     }
 }
