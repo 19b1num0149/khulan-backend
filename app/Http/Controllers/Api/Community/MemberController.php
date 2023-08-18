@@ -10,24 +10,12 @@ class MemberController extends Controller
 {
     public function getMembers(Request $request)
     {
-        $members = GroupMember::select('group_id', 'member_id', 'role_id', 'joined_at', 'left_at')
-            ->where('group_id', $request->group_id)
-            ->with('group:id,name')
-            ->with('member:id,name')
-            ->paginate(15);
+        $group_id = $request->group_id;
+        $members = GroupMember::with(['group:id,name', 'member:id,name'])
+            ->select('group_id', 'member_id', 'role_id', 'joined_at', 'left_at')
+            ->where('group_id', $group_id)
+            ->simplePaginate(15);
 
-        $transformedMembers = [];
-
-        foreach ($members as $members) {
-            $transformedMembers[] = [
-                'group' => $members->group,
-                'member' => $members->member,
-                'role_id' => $members->role_id,
-                'joined_at' => $members->joined_at,
-                'left_at' => $members->left_at,
-            ];
-        }
-
-        return response()->json(['members' => $transformedMembers], 200);
+        return response()->json(['members' => $members], 200);
     }
 }

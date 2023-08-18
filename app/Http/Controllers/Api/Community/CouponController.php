@@ -10,23 +10,13 @@ class CouponController extends Controller
 {
     public function getCoupons(Request $request)
     {
-        $coupons = GroupMemberCoupon::select('id', 'group_id', 'member_id', 'description')
-            ->where('group_id', $request->group_id)
-            ->with('group:id,name')
-            ->with('member:id,name')
-            ->paginate(15);
+        $group_id = $request->group_id;
 
-        $transformedCoupons = [];
+        $coupons = GroupMemberCoupon::with(['group:id,name', 'member:id,name'])
+            ->select('id', 'group_id', 'member_id', 'description')
+            ->where('group_id', $group_id)
+            ->simplePaginate(15);
 
-        foreach ($coupons as $coupons) {
-            $transformedCoupons[] = [
-                'id' => $coupons->id,
-                'group' => $coupons->group,
-                'member' => $coupons->member,
-                'description' => $coupons->description,
-            ];
-        }
-
-        return response()->json(['coupons' => $transformedCoupons], 200);
+        return response()->json(['coupons' => $coupons], 200);
     }
 }
