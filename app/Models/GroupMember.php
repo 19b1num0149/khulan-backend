@@ -18,7 +18,7 @@ class GroupMember extends Model
         'left_at',
     ];
 
-    public function user()
+    public function member()
     {
         return $this->belongsTo(User::class);
     }

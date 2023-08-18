@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Activities>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserNotification>
  */
-class ActivitiesFactory extends Factory
+class UserNotificationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,9 @@ class ActivitiesFactory extends Factory
     public function definition(): array
     {
         return [
-            'description' => fake()->text(20),
+            'user_id' => rand(1, 10),
+            'notification_id' => rand(1, 4),
+            'read_at' => now(),
         ];
     }
 }
