@@ -3,16 +3,17 @@
 namespace App\Http\Controllers\Api\Private;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Content;
+use Illuminate\Http\Request;
 
-class ContentController extends Controller{
-
-    public function getData(Request $request , $contentid) {
+class ContentController extends Controller
+{
+    public function getData(Request $request, $contentid)
+    {
 
         $data = Content::find($contentid);
-        return response()->json(['msg' => 'success' , 'data' => $data] , 200);
+
+        return response()->json(['msg' => 'success', 'data' => $data], 200);
 
     }
-
 }
