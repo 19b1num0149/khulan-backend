@@ -19,9 +19,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/{userid}/interests', [InterestController::class, 'getUserInterest']);
     Route::post('/{userid}/interests', [InterestController::class, 'postUserInterest']);
 
-    Route::get('/user-groups/{user_id}', [GroupController::class, 'getUserGroups']);
-    Route::get('/user/{user_id}/group/{group_id}/joined', [GroupController::class, 'getJoinedGroupOfUser']);
-    Route::post('/join-request/user/{user_id}/group/{group_id}', [GroupController::class, 'createGroupJoinRequest']);
+    Route::get('/{userid}/groups', [GroupController::class, 'getUserGroups']);
+    Route::get('/{userid}/groups/{groupid}', [GroupController::class, 'getJoinedGroupOfUser']);
+    Route::post('/{userid}/groups/{groupid}', [GroupController::class, 'createGroupJoinRequest']);
     // Settings
     Route::get('/user/settings', [SettingsController::class, 'getData']);
     Route::post('/user/settings', [SettingsController::class, 'store']);
