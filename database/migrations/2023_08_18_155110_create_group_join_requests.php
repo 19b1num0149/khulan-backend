@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('group_join_requests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); 
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('group_id');
             $table->timestamps();
         });
