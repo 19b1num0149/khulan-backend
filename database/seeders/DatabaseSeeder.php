@@ -9,6 +9,7 @@ use App\Models\Content;
 use App\Models\Group;
 use App\Models\GroupEvent;
 use App\Models\GroupEventItinerary;
+use App\Models\GroupEventMember;
 use App\Models\GroupInterest;
 use App\Models\GroupMember;
 use App\Models\GroupMemberCoupon;
@@ -49,5 +50,6 @@ class DatabaseSeeder extends Seeder
         UserService::factory(3)->create();
         UserInterest::factory(5)->create();
         UserSettings::factory(5)->create();
+        GroupEventMember::factory(5)->create();
     }
 }

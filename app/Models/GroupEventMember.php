@@ -5,23 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GroupMemberCoupon extends Model
+class GroupEventMember extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'group_id',
+        'event_id',
         'member_id',
-        'description',
+        'joined_at',
     ];
 
-    public function member()
+    public function event()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function group()
-    {
-        return $this->belongsTo(Group::class);
+        return $this->belongsTo(Group_and_Event::class);
     }
 }
