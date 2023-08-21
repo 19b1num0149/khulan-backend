@@ -14,8 +14,9 @@ class EventController extends Controller
         $group_id = $request->group_id;
 
         $events = GroupEvent::with(['creator:id,name', 'group:id,name'])
-            ->select('id', 'group_id', 'name', 'description', 'date', 'creator_id')
+            ->select('id', 'group_id', 'name', 'description', 'date', 'creator_id', 'created_at')
             ->where('group_id', $group_id)
+            ->orderBy('created_at', 'desc')
             ->simplePaginate(15);
 
         return response()->json(['events' => $events], 200);
@@ -42,7 +43,7 @@ class EventController extends Controller
         $body = new GroupEventMember();
 
         $body->group_id = $request->group_id;
-        $body->event_id = $request->event_id;
+        $body->event_id = $request->id;
         $body->member_id = $request->member_id;
         $body->joined_at = now();
 

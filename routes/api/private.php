@@ -22,16 +22,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/{user_id}/group/{group_id}/joined' , [GroupController::class , 'getJoinedGroupOfUser']);
     Route::post('/join-request/user/{user_id}/group/{group_id}' , [GroupController::class , 'createGroupJoinRequest']);
     // Settings
-    Route::get('/user/settings' , [SettingsController::class , 'getData']);
-    Route::post('/user/settings' , [SettingsController::class , 'store']);
+    Route::get('/user/settings', [SettingsController::class, 'getData']);
+    Route::post('/user/settings', [SettingsController::class, 'store']);
 
     // Notification
-    Route::get('/user/notification' , [NotificationController::class , 'getData']);
-    Route::post('/user/notification/{id}' , [NotificationController::class , 'read']);
+    Route::get('/user/notification', [NotificationController::class, 'getData']);
+    Route::post('/user/notification/{id}', [NotificationController::class, 'read']);
 
     // Payment
-    Route::get('/user/payment' , [PaymentController::class , 'getData']);
-    Route::get('/user/payment/{id}' , [PaymentController::class , 'view']);
+    Route::get('/user/payment', [PaymentController::class, 'getData']);
+    Route::get('/user/payment/{id}', [PaymentController::class, 'view']);
 
     // Content
     Route::get('/user/content/{id}' , [ContentController::class , 'getData']);

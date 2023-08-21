@@ -16,6 +16,7 @@ class ContentController extends Controller
         $contents = Content::with('group:id,name')
             ->select('id', 'group_id', 'body', 'point', 'type', 'slug', 'created_at')
             ->where('group_id', $group_id)
+            ->orderBy('created_at', 'desc')
             ->simplePaginate(15);
 
         return response()->json(['contents' => $contents], 200);
