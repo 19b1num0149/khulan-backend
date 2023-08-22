@@ -21,7 +21,12 @@ class GroupMember extends Model
 
     public function member()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'member_id', 'id');
+    }
+
+    public function userPoint()
+    {
+        return $this->belongsTo(User::class, 'member_id', 'id');
     }
 
     public function group()
@@ -33,4 +38,14 @@ class GroupMember extends Model
     {
         $query->orderBy('joined_at', 'DESC');
     }
+
+    public function scopeRank(Builder $query): void
+    {
+        $query->orderBy('user_points.point', 'DESC');
+    }
+
+    //     public function scopeStructure(Builder $query): void
+    //     {
+    //         $query->orderBy('joined_at', 'DESC');
+    //     }
 }
