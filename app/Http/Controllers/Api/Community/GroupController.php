@@ -3,8 +3,11 @@
 namespace app\Http\Controllers\Api\Community;
 
 use App\Http\Controllers\Controller;
+use App\Models\Content;
 use App\Models\Group;
+use App\Models\GroupEvent;
 use App\Models\GroupMember;
+use App\Models\UserPoint;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -21,23 +24,50 @@ class GroupController extends Controller
 
     public function getGroup(Request $request)
     {
-        $group_id = $request->group_id;
+        $groupid = $request->groupid;
 
         $group = Group::with(['user:id,name'])
             ->select('id', 'name', 'founded_year', 'description', 'user_id')
-            ->where('id', $group_id)
+            ->where('id', $groupid)
             ->first();
+        $members_count = GroupMember::where('group_id', $groupid)
+            ->count();
 
-        return response()->json(['group' => $group], 200);
+        $top_members = UserPoint::selectRaw('*, SUM(point) as total_sum')
+            ->where('group_id', $groupid)
+            ->with(['user:id,name'])
+            ->groupBy('id')
+            ->orderBy('total_sum', 'DESC')
+            ->take(5)->get();
+
+        $events = GroupEvent::where('group_id', $groupid)
+            ->orderBy('created_at', 'DESC')
+            ->take(2)->get();
+
+        $contents = Content::where('group_id', $groupid)
+            ->orderBy('created_at', 'DESC')
+            ->take(2)->get();
+
+        if (isset($group)) {
+            return response()->json([
+                'members_count' => $members_count,
+                'top_members' => $top_members,
+                'events' => $events,
+                'contents' => $contents,
+                'group' => $group], 200);
+        }
+
+        return response()->json(['msg' => trans('shared.failed')], 422);
+
     }
 
     public function about(Request $request)
     {
-        $group_id = $request->group_id;
+        $groupid = $request->groupid;
 
         $about = Group::with(['user:id,name'])
             ->select('id', 'name', 'founded_year', 'description', 'user_id', 'qr_data', 'created_at')
-            ->where('id', $group_id)
+            ->where('id', $groupid)
             ->get();
 
         return response()->json(['about' => $about], 200);
@@ -45,11 +75,11 @@ class GroupController extends Controller
 
     public function contact(Request $request)
     {
-        $group_id = $request->group_id;
+        $groupid = $request->groupid;
 
         $contact = Group::with(['user:id,name'])
             ->select('id', 'name', 'founded_year', 'description', 'user_id', 'qr_data', 'created_at')
-            ->where('id', $group_id)
+            ->where('id', $groupid)
             ->get();
 
         return response()->json(['contact' => $contact], 200);
@@ -58,10 +88,10 @@ class GroupController extends Controller
     public function leave(Request $request)
     {
         $user_id = $request->user_id;
-        $group_id = $request->group_id;
+        $groupid = $request->groupid;
 
         $body = GroupMember::where('member_id', $user_id)
-            ->where('group_id', $group_id)
+            ->where('group_id', $groupid)
             ->first();
 
         $body->left_at = now();
