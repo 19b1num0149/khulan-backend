@@ -12,4 +12,6 @@ Route::post('/register-by-email', [RegisterController::class, 'registerByEmail']
 Route::post('/register-by-facebook', [RegisterController::class, 'registerByFacebook']);
 Route::post('/activate_account', [LoginController::class, 'activate_account']);
 
-Route::post('/logout', [LoginController::class, 'logout']);
+//  Forgot password
+
+// Route::post('/logout', [LoginController::class, 'logout']);

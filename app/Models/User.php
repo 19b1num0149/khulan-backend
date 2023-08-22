@@ -66,8 +66,13 @@ class User extends Authenticatable
         return $this->hasMany(GroupEvent::class, 'creator_id');
     }
 
-    public function members()
+    public function groupMembers()
     {
-        return $this->hasMany(GroupMember::class, 'member_id');
+        return $this->hasMany(GroupMember::class, 'member_id', 'id');
+    }
+
+    public function userPoints()
+    {
+        return $this->hasMany(UserPoint::class, 'user_id', 'id');
     }
 }

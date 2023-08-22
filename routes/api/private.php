@@ -1,26 +1,28 @@
 <?php
 
-use App\Http\Controllers\Api\Guest\LoginController;
-use app\Http\Controllers\Api\Private\GroupController;
-use app\Http\Controllers\Api\Private\InterestController;
-use App\Http\Controllers\Api\Private\ProfileController;
-use App\Http\Controllers\Api\Private\SettingsController;
+// use App\Http\Controllers\Api\Guest\LoginController;
+use App\Http\Controllers\Api\Private\ContentController;
+use App\Http\Controllers\Api\Private\GroupController;
+use App\Http\Controllers\Api\Private\InterestController;
 use App\Http\Controllers\Api\Private\NotificationController;
 use App\Http\Controllers\Api\Private\PaymentController;
-use App\Http\Controllers\Api\Private\ContentController;
-
+use App\Http\Controllers\Api\Private\ProfileController;
+use App\Http\Controllers\Api\Private\SettingsController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::post('/logout', [LoginController::class, 'logout']);
-    Route::get('/authuser/{id}' , [ProfileController::class , 'getUser']);
-    Route::post('/profile/{id}' , [ProfileController::class , 'postUser']);
-    Route::get('/user-interest/{user_id}' , [InterestController::class , 'getUserInterest']);
-    Route::post('/add-user-interest/{user_id}' , [InterestController::class , 'postUserInterest']);
-    Route::get('/user-groups/{user_id}' , [GroupController::class , 'getUserGroups']);
-    Route::get('/user/{user_id}/group/{group_id}/joined' , [GroupController::class , 'getJoinedGroupOfUser']);
-    Route::post('/join-request/user/{user_id}/group/{group_id}' , [GroupController::class , 'createGroupJoinRequest']);
+    //Route::post('/logout', [LoginController::class, 'logout']);
+    // Profile
+    Route::get('/{userid}', [ProfileController::class, 'getUser']);
+    Route::post('/{userid}', [ProfileController::class, 'postUser']);
+    // Interest
+    Route::get('/{userid}/interests', [InterestController::class, 'getUserInterest']);
+    Route::post('/{userid}/interests', [InterestController::class, 'postUserInterest']);
+    // Group
+    Route::get('/{userid}/groups', [GroupController::class, 'getUserGroups']);
+    Route::get('/{userid}/groups/{groupid}', [GroupController::class, 'getJoinedGroupOfUser']);
+    Route::post('/{userid}/groups/{groupid}', [GroupController::class, 'createGroupJoinRequest']);
     // Settings
     Route::get('/user/settings', [SettingsController::class, 'getData']);
     Route::post('/user/settings', [SettingsController::class, 'store']);
@@ -34,8 +36,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/payment/{id}', [PaymentController::class, 'view']);
 
     // Content
-    Route::get('/user/content/{id}' , [ContentController::class , 'getData']);
-
-
+    Route::get('/user/content/{id}', [ContentController::class, 'getData']);
 
 });

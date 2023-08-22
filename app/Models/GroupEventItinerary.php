@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class GroupEventItinerary extends Model
 {
@@ -15,8 +16,8 @@ class GroupEventItinerary extends Model
         'title',
     ];
 
-    public function event()
+    public function event(): BelongsTo
     {
-        return $this->belongsTo(Group_and_Event::class);
+        return $this->belongsTo(GroupEvent::class, 'event_id', 'id');
     }
 }
