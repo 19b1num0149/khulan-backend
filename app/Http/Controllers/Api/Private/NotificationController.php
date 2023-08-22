@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Private;
 
 use App\Http\Controllers\Controller;
-use App\Models\Notification;
+use App\Models\UserNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -12,7 +12,7 @@ class NotificationController extends Controller
     public function getData(Request $request)
     {
 
-        $data = Notification::where('user_id', $request->user()->id)
+        $data = UserNotification::where('user_id', $request->user()->id)
             ->orderBy('id', 'DESC')
             ->simplepaginate(15);
 
@@ -23,7 +23,7 @@ class NotificationController extends Controller
     public function read(Request $request, $notifid)
     {
 
-        $data = new Notification;
+        $data = new UserNotification;
         $data->user_id = $request->user()->id;
         $data->notification_id = $notifid;
         $data->read_at = Carbon::now();

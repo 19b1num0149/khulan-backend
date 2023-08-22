@@ -24,7 +24,7 @@ class UserProfilePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:10',
+            'name' => 'required|max:255',
             'phone' => 'required|max:255',
             'address' => 'nullable',
             'age' => 'nullable|integer|min:18|max:150',
