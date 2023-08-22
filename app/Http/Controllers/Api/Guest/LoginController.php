@@ -30,46 +30,4 @@ class LoginController extends Controller
             'profile' => $user], 200);
     }
 
-    public function registerByEmail(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => ['required', new StrongPassword],
-        ]);
-
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-            'phone' => $request->phone]);
-
-        return response()->json(['msg' => 'Амжилттай бүртэглээ.'], 200);
-    }
-
-    public function activate_account(Request $request)
-    {
-
-        $code = DB::table('user_verifications')
-            ->select('code')
-            ->where('email', $request->email)
-            ->where('expired_at', '>=', Carbon::now())
-            ->orderBy('created_at', 'DESC')
-            ->first();
-
-        if ($code == null) {
-            return response()->json(['msg' => 'Код илгээгдээгүй байна.'], 200);
-        }
-
-        if ($code->code == $request->code) {
-            $verification = User::where('email', $request->email)->first();
-            $verification->email_verified_at = Carbon::now();
-            $verification->save();
-
-            return response()->json(['msg' => 'Амжилттай.'], 200);
-        }
-
-        return response()->json(['msg' => 'Код таарахгүй байна.'], 200);
-
-    }
 }
