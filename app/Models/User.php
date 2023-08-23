@@ -7,11 +7,12 @@ use App\Events\UserRegistered;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable , HasProfilePhoto;
 
     /**
      * The attributes that are mass assignable.
@@ -65,8 +66,13 @@ class User extends Authenticatable
         return $this->hasMany(GroupEvent::class, 'creator_id');
     }
 
-    public function members()
+    public function groupMembers()
     {
-        return $this->hasMany(GroupMember::class, 'member_id');
+        return $this->hasMany(GroupMember::class, 'member_id', 'id');
+    }
+
+    public function userPoints()
+    {
+        return $this->hasMany(UserPoint::class, 'user_id', 'id');
     }
 }
