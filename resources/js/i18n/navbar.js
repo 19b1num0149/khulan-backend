@@ -10,5 +10,6 @@ export default {
     product: 'Бүтээгдэхүүн',
     country: 'Улс',
     region: 'Муж/Бүс',
-    city: 'Хот'
+    city: 'Хот',
+    group: 'Байгууллага'
 }

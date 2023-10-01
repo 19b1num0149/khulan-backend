@@ -91,7 +91,7 @@
             
             <!-- Apps -->
             <button
-                v-if="user.type=='admin'"
+                v-if="user.role_id=='1'"
                 type="button"
                 data-dropdown-toggle="apps-dropdown"
                 class="p-2 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
@@ -109,7 +109,7 @@
 
             <!-- Dropdown menu -->
             <div
-                v-if="user.type=='admin'"
+                v-if="user.role_id=='1'"
                 class="hidden overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg dark:bg-gray-700 dark:divide-gray-600 rounded-xl"
                 id="apps-dropdown">
 
@@ -125,7 +125,7 @@
                             viewBox="0 -960 960 960">
                             <path d="M160-740v-60h642v60H160Zm5 580v-258h-49v-60l44-202h641l44 202v60h-49v258h-60v-258H547v258H165Zm60-60h262v-198H225v198Zm-50-258h611-611Zm0 0h611l-31-142H206l-31 142Z"/>
                         </svg>
-                        <div class="text-sm text-gray-900 dark:text-white">{{ $t('company') }}</div>
+                        <div class="text-sm text-gray-900 dark:text-white">{{ $t('group') }}</div>
                     </Link>
                     <Link href="/settings/product" class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group">
                         <svg 

@@ -21,6 +21,7 @@ use App\Http\Controllers\Settings\CountryController;
 use App\Http\Controllers\Settings\ProductController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\RegionController;
+use App\Http\Controllers\SideBarController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/logout', [LogoutController::class, 'signout']);
 
-    Route::prefix('settings')->group(function () {
+    Route::prefix('group')->group(function () {
         Route::resource('/product', ProductController::class)->except(['show'])->middleware('check.admin');
         Route::resource('/company', CompanyController::class)->middleware('check.admin');
         Route::resource('/company.users', CompanyUsersController::class)->except(['show'])->middleware('check.admin');
@@ -67,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
             Route::resource('/vacancy', HrVacancyController::class)->except(['show']);
         });
         // Temple Section
-        Route::prefix('temple')->group(function () {
+        Route::prefix('group')->group(function () {
             Route::resource('/category', TempleQrCategoryController::class)->except(['show']);
             Route::resource('/item', TempleQrItemController::class);
             Route::resource('/item.person', QrItemPersonController::class)->except(['show', 'create', 'edit']);
