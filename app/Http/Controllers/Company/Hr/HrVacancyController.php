@@ -9,15 +9,15 @@ use App\Models\Hr\HrCustomer;
 use App\Models\Hr\HrJobType;
 use App\Models\Hr\HrType;
 use App\Models\Hr\HrVacancy;
-use App\Traits\Helper\HasCity;
-use App\Traits\Helper\HasRegion;
+// use App\Traits\Helper\HasCity;
+// use App\Traits\Helper\HasRegion;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class HrVacancyController extends Controller
 {
-    use HasCity, HasRegion;
+    // use HasCity, HasRegion;
 
     public function index(Request $request): Response
     {

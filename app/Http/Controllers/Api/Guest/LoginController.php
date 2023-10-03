@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Rules\StrongPassword;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
@@ -19,12 +18,14 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
-            return response()->json(['msg' => 'И-мэйл эсвэл нууц үг буруу байна.'], 200);
+            return response()->json([
+                'errors' => ['email' => ['И-мэйл эсвэл нууц үг буруу байна.'] ]
+            ], 422);
         }
 
-        if ($user->email_verified_at == null) {
-            return response()->json(['msg' => 'Хаяг идэвхгүй байна'], 200);
-        }
+        // if ($user->email_verified_at == null) {
+        //     return response()->json(['msg' => 'Хаяг идэвхгүй байна'], 200);
+        // }
 
         return response()->json(['token' => $user->createToken($request->device_name)->plainTextToken,
             'profile' => $user], 200);
