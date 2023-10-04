@@ -8,6 +8,7 @@ import shared  from './shared'
 import navbar  from './navbar'
 import hr  from './hr'
 import temple from './temple'
+import group from './group'
 
 const i18n = createI18n({
 
@@ -24,7 +25,8 @@ const i18n = createI18n({
       ...shared,
       ...navbar,
       ...hr,
-      ...temple
+      ...temple,
+      ...group
     }
 
   },

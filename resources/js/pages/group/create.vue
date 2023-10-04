@@ -5,21 +5,14 @@
 
     const props = defineProps({ 
         flash: Object,
-        types: Object,
-        categories: Object
+        users: Object
     })
 
     const form = useForm({
-        code: '',
         name: '',
+        founded_year: '',
         description: '',
-        type: '',
-        category: '',
-        madeAt: '',
-        companyBuilt: '',
-        companyBuiltBasement: '',
-        image: '',
-        designDesc: ''
+        admin: '',
     })
 
     function reset() {
@@ -33,27 +26,16 @@
         })
     }
 
-    let _filteredCategories = [];
-
-    // Listening type
-    watch (
-        () => form.type,
-        (type) => {
-            form.category = '';
-            _filteredCategories = props.categories.filter((item) => item.type == type)
-        }
-    )
-
 </script>
 
 <template>
 
     <div>
-        <Head :title="$t('templeItemAdd')" />
+        <Head :title="$t('groupAdd')" />
         <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
             <page-title 
-                :title="$t('templeItem')"
-                :subtitle="$t('templeItemAdd')"></page-title>
+                :title="$t('group')"
+                :subtitle="$t('groupAdd')"></page-title>
 
             <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <transition name="fade" mode="out-in" appear>
@@ -61,7 +43,7 @@
                         v-if="flash.success"
                         type="success">{{ flash.success }}</alert>
                 </transition> 
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $t('templeItemAdd') }}</h5>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $t('groupAdd') }}</h5>
                 <hr class="mt-4 mb-4">                
                 <form @submit.prevent="submit">
                     <!-- body -->
@@ -70,20 +52,7 @@
                         <!-- First Row -->
                         <div class="grid grid-cols-3 gap-4 mb-6">
                             <div>
-                                <label for="code" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ $t('templeItemCode') }} *</label>
-                                <input 
-                                    type="text" 
-                                    id="code" 
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                                    :class="[{ 'border-red-500': form.errors.code }]"
-                                    placeholder=""
-                                    v-model="form.code" 
-                                    autocomplete="off">
-                                <p class="mt-1 text-xs text-red-600 dark:text-red-500" v-if="form.errors.code">{{ form.errors.code }}</p>
-                            </div>
-
-                            <div>
-                                <label for="name" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ $t('templeItemName') }} *</label>
+                                <label for="name" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ $t('groupName') }} *</label>
                                 <input 
                                     type="text" 
                                     id="name" 
@@ -96,21 +65,14 @@
                             </div>
                                                         
                             <div>
-                                <label for="type" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ $t('templeItemType') }} *</label>
-                                <select id="type"                                         
-                                        v-model="form.type"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        :class="[{ 'border-red-500': form.errors.type }]">
-                                   <option value="">{{ $t('pleaseSelect') }}</option>
-                                   <option v-for="(item, index) in types" :key="index" :value="item.id">{{ item.name }} </option>                  
-                                </select>               
-                                <p class="mt-1 text-xs text-red-600 dark:text-red-500" v-if="form.errors.type">{{ form.errors.type }}</p>
+                                <label for="founded_year" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ $t('groupFoundedYear') }} *</label>
+                                <input id="founded_year"      
+                                    v-model="form.founded_year"                                   
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    :class="[{ 'border-red-500': form.errors.founded_year }]"
+                                    type="number" min="1900" max="2099" step="1" value="2023" >                                 
+                                <p class="mt-1 text-xs text-red-600 dark:text-red-500" v-if="form.errors.founded_year">{{ form.errors.founded_year }}</p>
                             </div>
-                        </div>
-                        
-                        <!-- Second Row -->
-                        <div class="grid grid-cols-3 gap-4 mb-6">
-
                             <div>
                                 <label for="category" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ $t('templeItemCategory') }} *</label>
                                 <select id="category"                                         
@@ -118,10 +80,16 @@
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         :class="[{ 'border-red-500': form.errors.category }]">
                                    <option value="">{{ $t('pleaseSelect') }}</option>
-                                   <option v-for="(item, index) in _filteredCategories" :key="index" :value="item.id">{{ item.name }} </option>                  
+                                   <option v-for="(item, index) in users" :key="index" :value="item.id">{{ item.name }} </option>                  
                                 </select>               
                                 <p class="mt-1 text-xs text-red-600 dark:text-red-500" v-if="form.errors.category">{{ form.errors.category }}</p>
                             </div>
+                        </div>
+
+                        <!-- Second Row -->
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+
+                            
 
                             <div>
                                 <label for="madeat" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ $t('templeItemMadeAt') }} </label>

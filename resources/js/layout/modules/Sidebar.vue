@@ -1,10 +1,8 @@
 <script setup>
-    import { computed, onMounted } from 'vue'
-    import { usePage, Link } from '@inertiajs/vue3'  
+    import { Link, usePage } from '@inertiajs/vue3'    
     const page = usePage()
-    const items = computed(() => page.props.items)
-</script>
 
+</script>
 <template>
   <aside
     class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
@@ -56,25 +54,12 @@
             <span class="ml-3">{{ $t('sidebarOverview') }}</span>
           </Link>
         </li>
-        <!-- Groups not working -->
-        <li v-for="(item, index) in items" :key="index">
-          <!-- <button
-            type="button"
-            class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-            :class="{ 'text-primary-500': $page.url.startsWith('/group/'.item) }">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              viewBox="0 -960 960 960"
-              class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" 
-              aria-hidden="true">
-              <path d="M144-40v-60h672v60H144Zm0-820v-60h672v60H144Zm336 416q50 0 84-34t34-84q0-50-34-84t-84-34q-50 0-84 34t-34 84q0 50 34 84t84 34ZM132-160q-24 0-42-18t-18-42v-520q0-26 18-43t42-17h696q24 0 42 18t18 42v520q0 24-18 42t-42 18H132Zm88-60q51-63 121-94.5T479.5-346q68.5 0 140 31.5T740-220h88v-520H132v520h88Zm94 0h334q-31-30-72.5-48T480-286q-54 0-94.5 18T314-220Zm166.158-284Q456-504 439.5-521T423-562q0-24 16.342-41t40.5-17Q504-620 520.5-603t16.5 41q0 24-16.342 41t-40.5 17ZM480-480Z"/>
-            </svg>    
-            <span class="flex-1 ml-3 text-left whitespace-nowrap">{{item.name}}</span>
-          </button> -->
+        <!-- Group -->
+        <li>
           <Link
-            href="'/group/'+ item.id"
+            href="/group/item"
             class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-            :class="{ 'text-primary-500': $page.url.startsWith('/group/'.item) }">
+            :class="{ 'text-primary-600': $page.url === '/group' }">
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
               viewBox="0 -960 960 960"
@@ -82,8 +67,140 @@
               aria-hidden="true">
               <path d="M144-40v-60h672v60H144Zm0-820v-60h672v60H144Zm336 416q50 0 84-34t34-84q0-50-34-84t-84-34q-50 0-84 34t-34 84q0 50 34 84t84 34ZM132-160q-24 0-42-18t-18-42v-520q0-26 18-43t42-17h696q24 0 42 18t18 42v520q0 24-18 42t-42 18H132Zm88-60q51-63 121-94.5T479.5-346q68.5 0 140 31.5T740-220h88v-520H132v520h88Zm94 0h334q-31-30-72.5-48T480-286q-54 0-94.5 18T314-220Zm166.158-284Q456-504 439.5-521T423-562q0-24 16.342-41t40.5-17Q504-620 520.5-603t16.5 41q0 24-16.342 41t-40.5 17ZM480-480Z"/>
             </svg>
-            <span class="flex-1 ml-3 text-left whitespace-nowrap">{{item.name}}</span>
+            <span class="ml-3">{{ $t('group') }}</span>
           </Link>
+        </li>
+
+        <!-- Tours -->
+        <li>
+          <Link
+            href="/group/item"
+            class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+            :class="{ 'text-primary-600': $page.url === '/group' }">
+            <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 12.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/>
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 3h-2l-.447-.894A2 2 0 0 0 12.764 1H7.236a2 2 0 0 0-1.789 1.106L5 3H3a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V5a2 2 0 0 0-2-2Z"/>
+            </svg>
+            <span class="ml-3">{{ $t('group') }}</span>
+          </Link>
+        </li>        
+        
+        <!-- HR & Training -->
+        <li>
+          <button
+            type="button"
+            class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+            :class="{ 'text-primary-500': $page.url.startsWith('/company/hr') }"
+            aria-controls="dropdown-hr"
+            data-collapse-toggle="dropdown-hr">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 -960 960 960"
+              class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" 
+              aria-hidden="true">
+              <path d="M144-40v-60h672v60H144Zm0-820v-60h672v60H144Zm336 416q50 0 84-34t34-84q0-50-34-84t-84-34q-50 0-84 34t-34 84q0 50 34 84t84 34ZM132-160q-24 0-42-18t-18-42v-520q0-26 18-43t42-17h696q24 0 42 18t18 42v520q0 24-18 42t-42 18H132Zm88-60q51-63 121-94.5T479.5-346q68.5 0 140 31.5T740-220h88v-520H132v520h88Zm94 0h334q-31-30-72.5-48T480-286q-54 0-94.5 18T314-220Zm166.158-284Q456-504 439.5-521T423-562q0-24 16.342-41t40.5-17Q504-620 520.5-603t16.5 41q0 24-16.342 41t-40.5 17ZM480-480Z"/>
+            </svg>    
+            <span class="flex-1 ml-3 text-left whitespace-nowrap">{{ $t('sidebarHR') }}</span>
+            <svg
+              aria-hidden="true"
+              class="w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </button>
+          <ul id="dropdown-hr" class="hidden py-2">
+            <li>
+              <Link
+                href="/company/hr/vacancy"
+                class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                :class="{ 'text-primary-600': $page.url.startsWith('/company/hr/vacancy') }">
+                {{ $t('sidebarHrVacancy') }}
+              </Link>
+            </li>
+            <li class="space-y-2 border-t border-gray-200 dark:border-gray-700"></li>
+            <li>
+              <Link
+                href="/company/hr/category"
+                class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                :class="{ 'text-primary-600': $page.url.startsWith('/company/hr/category') }">
+                {{ $t('sidebarHrCategory') }}
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/company/hr/type"
+                class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                :class="{ 'text-primary-600': $page.url.startsWith('/company/hr/type') }">
+                {{ $t('sidebarHrType') }}
+              </Link>
+            </li>            
+            <li>
+              <Link
+                href="/company/hr/jobtype"
+                class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                :class="{ 'text-primary-600': $page.url.startsWith('/company/hr/jobtype') }">
+                {{ $t('sidebarHrJobType') }}
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/company/hr/customer"
+                class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                :class="{ 'text-primary-600': $page.url.startsWith('/company/hr/customer') }">
+                {{ $t('sidebarHrCustomer') }}
+              </Link>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Temple -->
+        <li>
+          <button
+            type="button"
+            class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+            :class="{ 'text-primary-500': $page.url.startsWith('/company/temple') }"
+            aria-controls="dropdown-temple"
+            data-collapse-toggle="dropdown-temple">
+            <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+              <path d="M160-80v-374q-50-12-83.5-48.5T40-589h61q3 33 28.285 56T189-510h51v-104q-50-12-83.5-48.5T120-749h61q3 33 28.285 56T269-670h24l187-250 187 250h24q34.43 0 59.715-23Q776-716 779-749h61q-3 50-36 86.5T720-614v104h51q34.43 0 59.715-23Q856-556 859-589h61q-3 50-36 86.5T800-454v374H530v-160q0-21.25-14.325-35.625Q501.351-290 480.175-290 459-290 444.5-275.625 430-261.25 430-240v160H160Zm208-590h224L480-819 368-670Zm-68 160h360v-100H300v100Zm-80 370h150v-100q0-45.833 32.118-77.917 32.117-32.083 78-32.083Q526-350 558-317.917q32 32.084 32 77.917v100h150v-310H220v310Zm260-310Zm0-220Zm0 160Z"/>
+            </svg>
+            <span class="flex-1 ml-3 text-left whitespace-nowrap">{{ $t('sidebarTemple') }}</span>
+            <svg
+              aria-hidden="true"
+              class="w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </button>
+          <ul id="dropdown-temple" class="hidden py-2">
+            <li>
+              <Link
+                href="/company/temple/item"
+                class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                :class="{ 'text-primary-600': $page.url.startsWith('/company/temple/item') }">
+                {{ $t('sidebarTempleItem') }}
+              </Link>
+            </li>
+            <li class="space-y-2 border-t border-gray-200 dark:border-gray-700"></li>
+            <li>
+              <Link
+                href="/company/temple/category"
+                class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                :class="{ 'text-primary-600': $page.url.startsWith('/company/temple/category') }">
+                {{ $t('sidebarTempleCategory') }}
+              </Link>
+            </li>
+          </ul>
         </li> 
       </ul>
 

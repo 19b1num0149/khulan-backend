@@ -11,17 +11,9 @@ use App\Http\Controllers\Company\Temple\QrItemActivityController;
 use App\Http\Controllers\Company\Temple\QrItemController as TempleQrItemController;
 use App\Http\Controllers\Company\Temple\QrItemPersonController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Group\GroupController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
-use App\Http\Controllers\Settings\CityController;
-use App\Http\Controllers\Settings\CompanyController;
-use App\Http\Controllers\Settings\CompanyProductController;
-use App\Http\Controllers\Settings\CompanyUsersController;
-use App\Http\Controllers\Settings\CountryController;
-use App\Http\Controllers\Settings\ProductController;
-use App\Http\Controllers\Settings\ProfileController;
-use App\Http\Controllers\Settings\RegionController;
-use App\Http\Controllers\SideBarController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,17 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'signout']);
 
     Route::prefix('group')->group(function () {
-        Route::resource('/product', ProductController::class)->except(['show'])->middleware('check.admin');
-        Route::resource('/company', CompanyController::class)->middleware('check.admin');
-        Route::resource('/company.users', CompanyUsersController::class)->except(['show'])->middleware('check.admin');
-        Route::resource('/company.products', CompanyProductController::class)->except(['show'])->middleware('check.admin');
-        Route::resource('/country', CountryController::class)->except(['show'])->middleware('check.admin');
-        Route::resource('/region', RegionController::class)->except(['show'])->middleware('check.admin');
-        Route::get('/city/get-regions', [CityController::class, 'getRegions'])->middleware('check.admin');
-        Route::resource('/city', CityController::class)->except(['show'])->middleware('check.admin');
-
-        Route::get('/profile/{id}', [ProfileController::class, 'index']);
-        Route::post('/profile/{id}', [ProfileController::class, 'update']);
+        Route::resource('/item', GroupController::class);
     });
 
     Route::prefix('company')->group(function () {

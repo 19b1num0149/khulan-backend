@@ -3,56 +3,53 @@
     import { Link, Head } from '@inertiajs/vue3'; 
     import { Tabs, initFlowbite } from 'flowbite';
     import { ref, onMounted } from 'vue';
-    import people from './modules/people.vue';
-    import activity from './modules/activity.vue';
 
     const props = defineProps({ 
-        flash: Object,
-        item: Object,
+        data: Object,
         listtypes: Object,
         types: Object,
         categories: Object
     })
 
-    let _tabs = ref('')
+    // let _tabs = ref('')
 
-    const tabOptions = {
-      defaultTabId: 'people',      
-      onShow: () => {
-         // console.log('tab is shown');
-      }
-    };
+    // const tabOptions = {
+    //   defaultTabId: 'people',      
+    //   onShow: () => {
+    //      // console.log('tab is shown');
+    //   }
+    // };
 
-    function movingTab(id) {
-            _tabs.value.show(id);
-    }
+    // function movingTab(id) {
+    //         _tabs.value.show(id);
+    // }
 
-    function _typeName(value) {
-        let name = '';
-        props.types.map((item) => {
-            item.id == value
-            ? name = item.name
-            : null
-        })
-        return name
-    }
+    // function _typeName(value) {
+    //     let name = '';
+    //     props.types.map((item) => {
+    //         item.id == value
+    //         ? name = item.name
+    //         : null
+    //     })
+    //     return name
+    // }
 
     onMounted(() => {
         initFlowbite();
 
-        const tabElements = [
-            {
-                id: 'people',
-                triggerEl: document.querySelector('#people-tab'),
-                targetEl: document.querySelector('#people-tab-content')
-            },
-            {
-                id: 'activity',
-                triggerEl: document.querySelector('#activity-tab'),
-                targetEl: document.querySelector('#activity-tab-content')
-            }
-        ];
-        _tabs.value = new Tabs(tabElements, tabOptions);
+        // const tabElements = [
+        //     {
+        //         id: 'people',
+        //         triggerEl: document.querySelector('#people-tab'),
+        //         targetEl: document.querySelector('#people-tab-content')
+        //     },
+        //     {
+        //         id: 'activity',
+        //         triggerEl: document.querySelector('#activity-tab'),
+        //         targetEl: document.querySelector('#activity-tab-content')
+        //     }
+        // ];
+        // _tabs.value = new Tabs(tabElements, tabOptions);
     })
     function printQR() {
         print();
@@ -88,22 +85,22 @@
 <template>
 
     <div>
-        <Head :title="item?.name" />
+        <Head :title="data?.name" />
 
         <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
             
             <page-title 
-                :title="item?.name"
+                :title="data?.name"
                 :subtitle="''"></page-title>
 
             <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-4">
 
                 <div class="flex">
-                    <div class="flex-1">
+                    <!-- <div class="flex-1">
                         <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">                          
                             <Link 
                             as="button"
-                            href="/company/temple/item"
+                            href="/company/temple/data"
                             class="px-2 py-2 bg-white border border-transparent focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 rounded-lg dark:bg-gray-800 dark:border-transparent dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                             <svg class="w-4 h-4 text-gray-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"/>
@@ -153,8 +150,8 @@
                             {{ item.company_designed }}
                             </div>
                         </div>
-                    </div>
-                    <!-- {{ item }} -->
+                    </div>  -->
+                    {{ data }}
                 </div>
 
             </div>
@@ -172,7 +169,7 @@
                                     class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                                     @click="movingTab('people')"
                                     aria-controls="people-tab-content" 
-                                    aria-selected="false"> {{ $t('templeTabPeople') }} </button>
+                                    aria-selected="false"> {{ $t('groupMember') }} </button>
                         </li>
                         <li role="presentation">
                             <button 
@@ -187,7 +184,7 @@
                     </ul>
                 </div>
                 <!-- Tab container -->
-                <div id="tabsContents">
+                <!-- <div id="tabsContents">
 
                     <div class="hidden" id="people-tab-content" role="tabpanel" aria-labelledby="people-tab">
                         <people
@@ -202,7 +199,7 @@
                             :itemid="item?.id" /> 
                     </div>
 
-                </div>
+                </div> -->
                 
             </div>
         </div>
