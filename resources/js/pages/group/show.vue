@@ -2,58 +2,44 @@
     import PageTitle from '@/components/PageTitle.vue';
     import { Link, Head } from '@inertiajs/vue3'; 
     import { Tabs, initFlowbite } from 'flowbite';
+    import member from './modules/member.vue';
+    import event from './modules/event.vue';
     import { ref, onMounted } from 'vue';
 
     const props = defineProps({ 
         data: Object,
-        listtypes: Object,
-        types: Object,
-        categories: Object
     })
 
-    // let _tabs = ref('')
+    let _tabs = ref('')
 
-    // const tabOptions = {
-    //   defaultTabId: 'people',      
-    //   onShow: () => {
-    //      // console.log('tab is shown');
-    //   }
-    // };
+    const tabOptions = {
+      defaultTabId: 'member',      
+      onShow: () => {
+         // console.log('tab is shown');
+      }
+    };
 
-    // function movingTab(id) {
-    //         _tabs.value.show(id);
-    // }
-
-    // function _typeName(value) {
-    //     let name = '';
-    //     props.types.map((item) => {
-    //         item.id == value
-    //         ? name = item.name
-    //         : null
-    //     })
-    //     return name
-    // }
+    function movingTab(id) {
+            _tabs.value.show(id);
+    }
 
     onMounted(() => {
         initFlowbite();
 
-        // const tabElements = [
-        //     {
-        //         id: 'people',
-        //         triggerEl: document.querySelector('#people-tab'),
-        //         targetEl: document.querySelector('#people-tab-content')
-        //     },
-        //     {
-        //         id: 'activity',
-        //         triggerEl: document.querySelector('#activity-tab'),
-        //         targetEl: document.querySelector('#activity-tab-content')
-        //     }
-        // ];
-        // _tabs.value = new Tabs(tabElements, tabOptions);
+        const tabElements = [
+            {
+                id: 'member',
+                triggerEl: document.querySelector('#member-tab'),
+                targetEl: document.querySelector('#member-tab-content')
+            },
+            {
+                id: 'event',
+                triggerEl: document.querySelector('#event-tab'),
+                targetEl: document.querySelector('#event-tab-content')
+            }
+        ];
+        _tabs.value = new Tabs(tabElements, tabOptions);
     })
-    function printQR() {
-        print();
-    }
 
 </script>
 <style>
@@ -163,43 +149,42 @@
                     <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="tabs" role="tablist">
                         <li class="mr-2" role="presentation">
                             <button  
-                                    id="people-tab" 
+                                    id="member-tab" 
                                     type="button" 
                                     role="tab"
                                     class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    @click="movingTab('people')"
-                                    aria-controls="people-tab-content" 
+                                    @click="movingTab('member')"
+                                    aria-controls="member-tab-content" 
                                     aria-selected="false"> {{ $t('groupMember') }} </button>
                         </li>
                         <li role="presentation">
                             <button 
-                                    id="activity-tab" 
+                                    id="event-tab" 
                                     type="button" 
                                     role="tab"
                                     class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    @click="movingTab('activity')"
-                                    aria-controls="activity-tab-content" 
-                                    aria-selected="false"> {{ $t('templeTabActivity') }} </button>
-                        </li>                    
+                                    @click="movingTab('event')"
+                                    aria-controls="event-tab-content" 
+                                    aria-selected="false"> {{ $t('groupEvent') }} </button>
+                        </li>
                     </ul>
                 </div>
                 <!-- Tab container -->
-                <!-- <div id="tabsContents">
+                <div id="tabsContents">
 
-                    <div class="hidden" id="people-tab-content" role="tabpanel" aria-labelledby="people-tab">
-                        <people
-                            key="people"
-                            :itemid="item?.id"
-                            :listtypes="listtypes" />
+                    <div class="hidden" id="member-tab-content" role="tabpanel" aria-labelledby="member-tab">
+                        <member
+                            key="member"
+                             />
                     </div>
 
-                    <div class="hidden" id="activity-tab-content" role="tabpanel" aria-labelledby="activity-tab">
-                        <activity 
-                            key="activity"
-                            :itemid="item?.id" /> 
+                    <div class="hidden" id="event-tab-content" role="tabpanel" aria-labelledby="event-tab">
+                        <event 
+                            key="event"
+                             /> 
                     </div>
 
-                </div> -->
+                </div>
                 
             </div>
         </div>

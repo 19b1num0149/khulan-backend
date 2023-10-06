@@ -12,7 +12,8 @@ export default {
     groupAdmin: 'Админ хэрэглэгч',
     groupCreatedAt: 'Үүссэн огноо',
     groupDesc: 'Тайлбар',
+
     groupMemberCount: 'Гишүүдийн тоо',
     groupMember: 'Гишүүн',
-
+    groupEvent: 'Үйл ажиллагаа',
  }

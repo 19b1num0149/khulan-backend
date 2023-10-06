@@ -51,7 +51,7 @@ class GroupController extends Controller
 
     public function show(Request $request, $id): Response
     {   
-        $data = Group::findOrFail($id);
+        $data = Group::with('user')->findOrFail($id);
         return Inertia::render('group/show', [
             'data' => $data,
         ]);

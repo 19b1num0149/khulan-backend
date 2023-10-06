@@ -12,6 +12,7 @@ use App\Http\Controllers\Company\Temple\QrItemController as TempleQrItemControll
 use App\Http\Controllers\Company\Temple\QrItemPersonController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Group\GroupController;
+use App\Http\Controllers\Group\GroupMemberController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('group')->group(function () {
         Route::resource('/item', GroupController::class);
+        Route::resource('item.member',GroupMemberController::class)->except(['show', 'create', 'edit']);
     });
 
     // Route::prefix('company')->group(function () {
