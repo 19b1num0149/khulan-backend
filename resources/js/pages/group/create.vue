@@ -1,7 +1,6 @@
 <script setup>
     import PageTitle from '@/components/PageTitle.vue';
     import { useForm, Link, Head } from '@inertiajs/vue3';
-    import { watch } from 'vue';
 
     const props = defineProps({ 
         flash: Object,
@@ -20,7 +19,7 @@
     }
 
     const submit = () => {
-        form.post('/company/temple/item', {
+        form.post('/group/item', {
             preserveScroll: true,
             onSuccess: () => reset(),
         })
@@ -70,58 +69,25 @@
                                     v-model="form.founded_year"                                   
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     :class="[{ 'border-red-500': form.errors.founded_year }]"
-                                    type="number" min="1900" max="2099" step="1" value="2023" >                                 
+                                    type="number" min="1900" max="2099" step="1" placeholder="2023">                                 
                                 <p class="mt-1 text-xs text-red-600 dark:text-red-500" v-if="form.errors.founded_year">{{ form.errors.founded_year }}</p>
                             </div>
                             <div>
-                                <label for="category" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ $t('templeItemCategory') }} *</label>
-                                <select id="category"                                         
-                                        v-model="form.category"
+                                <label for="admin" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ $t('groupAdmin') }} *</label>
+                                <select id="admin"                                         
+                                        v-model="form.admin"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        :class="[{ 'border-red-500': form.errors.category }]">
+                                        :class="[{ 'border-red-500': form.errors.admin }]">
                                    <option value="">{{ $t('pleaseSelect') }}</option>
                                    <option v-for="(item, index) in users" :key="index" :value="item.id">{{ item.name }} </option>                  
                                 </select>               
-                                <p class="mt-1 text-xs text-red-600 dark:text-red-500" v-if="form.errors.category">{{ form.errors.category }}</p>
+                                <p class="mt-1 text-xs text-red-600 dark:text-red-500" v-if="form.errors.admin">{{ form.errors.admin }}</p>
                             </div>
                         </div>
 
                         <!-- Second Row -->
-                        <div class="grid grid-cols-3 gap-4 mb-6">
-
-                            
-
-                            <div>
-                                <label for="madeat" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ $t('templeItemMadeAt') }} </label>
-                                <input 
-                                    type="date" 
-                                    id="madeat" 
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                                    :class="[{ 'border-red-500': form.errors.madeat }]"
-                                    placeholder=""
-                                    v-model="form.madeAt" 
-                                    autocomplete="off">
-                                <p class="mt-1 text-xs text-red-600 dark:text-red-500" v-if="form.errors.madeat">{{ form.errors.madeat }}</p>
-                            </div>
-
-                            <div>
-                                <label for="companyBuilt" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ $t('templeItemCompanyBuilt') }}</label>
-                                <input 
-                                    type="text" 
-                                    id="companyBuilt" 
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                                    :class="[{ 'border-red-500': form.errors.companybuilt }]"
-                                    placeholder=""
-                                    v-model="form.companyBuilt" 
-                                    autocomplete="off">
-                                <p class="mt-1 text-xs text-red-600 dark:text-red-500" v-if="form.errors.companybuilt">{{ form.errors.companybuilt }}</p>
-                            </div>                   
-                            
-                        </div>
-                        
-                        <!-- Third Row -->
                         <div class="mb-6">
-                            <label for="desc" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('templeItemDesc') }}</label>
+                            <label for="desc" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $t('groupDesc') }}</label>
                             <textarea
                                 autocomplete="off"
                                 v-model="form.description"
@@ -132,46 +98,6 @@
                                 placeholder=""></textarea>
                             <p class="mt-1 text-xs text-red-600 dark:text-red-500" v-if="form.errors.description">{{ form.errors.description }}</p>
                         </div>
-
-                        <!-- Fourth Row -->
-                        <div class="grid grid-cols-3 gap-4 mb-6">
-
-                            <div>
-                                <label for="image" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ $t('templeItemImage') }}</label>
-                                <input id="image" type="file" @input="form.image = $event.target.files[0]" />
-                                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700" v-if="form.progress">
-                                    <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" :style="`width: ${form.progress.percentage}%`"> {{ form.progress.percentage }}%</div>
-                                </div>                                
-                            </div>
-
-                            <div>
-                                <label for="designDesc" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ $t('templeItemDesignDesc') }}</label>
-                                <input 
-                                    type="text" 
-                                    id="designDesc" 
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                                    :class="[{ 'border-red-500': form.errors.designdesc }]"
-                                    placeholder=""
-                                    v-model="form.designDesc" 
-                                    autocomplete="off">
-                                <p class="mt-1 text-xs text-red-600 dark:text-red-500" v-if="form.errors.designdesc">{{ form.errors.designdesc }}</p>
-                            </div>
-
-                            <div>
-                                <label for="companyBuiltBasement" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ $t('templeItemCompanyBuiltBasement') }}</label>
-                                <input 
-                                    type="text" 
-                                    id="companyBuiltBasement" 
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                                    :class="[{ 'border-red-500': form.errors.companybuiltbasement }]"
-                                    placeholder=""
-                                    v-model="form.companyBuiltBasement" 
-                                    autocomplete="off">
-                                <p class="mt-1 text-xs text-red-600 dark:text-red-500" v-if="form.errors.companybuiltbasement">{{ form.errors.companybuiltbasement }}</p>
-                            </div>
-                                                                                 
-                        </div>
-
                     </div>                
                     <!-- Action -->
                     <div>
@@ -183,7 +109,7 @@
                             class="text-white font-medium rounded-lg text-center px-5 py-2.5">
                             {{ $t('save') }}
                         </button>
-                        <Link class="py-2.5 px-5 ml-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" href="/company/temple/item">{{ $t('back') }}</Link>
+                        <Link class="py-2.5 px-5 ml-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" href="/group/item">{{ $t('back') }}</Link>
                     </div>
                 </form>
                 

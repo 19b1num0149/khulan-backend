@@ -38,24 +38,17 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('/item', GroupController::class);
     });
 
-    Route::prefix('company')->group(function () {
-        // HR Section
-        Route::prefix('hr')->group(function () {
-            Route::resource('/category', HrCategoryController::class)->except(['show']);
-            Route::resource('/type', HrTypeController::class)->except(['show']);
-            Route::resource('/jobtype', HrJobTypeController::class)->except(['show']);
-            Route::resource('/customer', HrCustomerController::class)->except(['show']);
-            Route::get('/vacancy/get/regions', [HrVacancyController::class, 'getRegions']);
-            Route::get('/vacancy/get/cities', [HrVacancyController::class, 'getCities']);
-            Route::resource('/vacancy', HrVacancyController::class)->except(['show']);
-        });
-        // Temple Section
-        Route::prefix('group')->group(function () {
-            Route::resource('/category', TempleQrCategoryController::class)->except(['show']);
-            Route::resource('/item', TempleQrItemController::class);
-            Route::resource('/item.person', QrItemPersonController::class)->except(['show', 'create', 'edit']);
-            Route::resource('/item.activity', QrItemActivityController::class)->except(['show', 'create', 'edit']);
-        });
-    });
+    // Route::prefix('company')->group(function () {
+    //     // HR Section
+    //     Route::prefix('hr')->group(function () {
+    //         Route::resource('/category', HrCategoryController::class)->except(['show']);
+    //         Route::resource('/type', HrTypeController::class)->except(['show']);
+    //         Route::resource('/jobtype', HrJobTypeController::class)->except(['show']);
+    //         Route::resource('/customer', HrCustomerController::class)->except(['show']);
+    //         Route::get('/vacancy/get/regions', [HrVacancyController::class, 'getRegions']);
+    //         Route::get('/vacancy/get/cities', [HrVacancyController::class, 'getCities']);
+    //         Route::resource('/vacancy', HrVacancyController::class)->except(['show']);
+    //     });
+    // });
 
 });
