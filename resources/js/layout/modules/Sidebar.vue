@@ -1,18 +1,6 @@
 <script setup>
     import { Link, usePage } from '@inertiajs/vue3'    
     const page = usePage()
-    
-    function allowProduct(id) {
-      if(page.props.auth.user.type == 'user') {
-        const { products } = page.props.auth.user.company      
-        let result = products.map(item => item.product_id).indexOf(id)
-        return result > -1 ? true : false
-      }
-      else {
-        return true;
-      }
-      
-    }
 
 </script>
 <template>
@@ -66,101 +54,39 @@
             <span class="ml-3">{{ $t('sidebarOverview') }}</span>
           </Link>
         </li>
-        <!-- Online Shopping -->
-        <li v-if="allowProduct(1)">
-          <button
-            type="button"
+        <!-- Group -->
+        <li>
+          <Link
+            href="/group/item"
             class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-            aria-controls="dropdown-shop"
-            data-collapse-toggle="dropdown-shop">
-            <svg
-              aria-hidden="true"
-              class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                fill-rule="evenodd"
-                d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                clip-rule="evenodd"></path>
+            :class="{ 'text-primary-600': $page.url === '/group' }">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 -960 960 960"
+              class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" 
+              aria-hidden="true">
+              <path d="M144-40v-60h672v60H144Zm0-820v-60h672v60H144Zm336 416q50 0 84-34t34-84q0-50-34-84t-84-34q-50 0-84 34t-34 84q0 50 34 84t84 34ZM132-160q-24 0-42-18t-18-42v-520q0-26 18-43t42-17h696q24 0 42 18t18 42v520q0 24-18 42t-42 18H132Zm88-60q51-63 121-94.5T479.5-346q68.5 0 140 31.5T740-220h88v-520H132v520h88Zm94 0h334q-31-30-72.5-48T480-286q-54 0-94.5 18T314-220Zm166.158-284Q456-504 439.5-521T423-562q0-24 16.342-41t40.5-17Q504-620 520.5-603t16.5 41q0 24-16.342 41t-40.5 17ZM480-480Z"/>
             </svg>
-            <span class="flex-1 ml-3 text-left whitespace-nowrap">{{ $t('sidebarShop') }}</span>
-            <svg
-              aria-hidden="true"
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                fill-rule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clip-rule="evenodd"></path>
-            </svg>
-          </button>
-          <ul id="dropdown-shop" class="hidden py-2">
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Products</a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Billing</a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Invoice</a>
-            </li>
-          </ul>
+            <span class="ml-3">{{ $t('group') }}</span>
+          </Link>
         </li>
 
         <!-- Tours -->
-        <li v-if="allowProduct(2)">
-          <button
-            type="button"
+        <li>
+          <Link
+            href="/group/item"
             class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-            aria-controls="dropdown-travel"
-            data-collapse-toggle="dropdown-travel">
+            :class="{ 'text-primary-600': $page.url === '/group' }">
             <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 12.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/>
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 3h-2l-.447-.894A2 2 0 0 0 12.764 1H7.236a2 2 0 0 0-1.789 1.106L5 3H3a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V5a2 2 0 0 0-2-2Z"/>
             </svg>
-            <span class="flex-1 ml-3 text-left whitespace-nowrap">{{ $t('sidebarTravel') }}</span>
-            <svg
-              aria-hidden="true"
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                fill-rule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clip-rule="evenodd"></path>
-            </svg>
-          </button>
-          <ul id="dropdown-travel" class="hidden py-2">
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Sign In</a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Sign Up</a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Forgot Password</a>
-            </li>
-          </ul>
+            <span class="ml-3">{{ $t('group') }}</span>
+          </Link>
         </li>        
         
         <!-- HR & Training -->
-        <li v-if="allowProduct(3)">
+        <li>
           <button
             type="button"
             class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -233,7 +159,7 @@
         </li>
 
         <!-- Temple -->
-        <li v-if="allowProduct(4)">
+        <li>
           <button
             type="button"
             class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"

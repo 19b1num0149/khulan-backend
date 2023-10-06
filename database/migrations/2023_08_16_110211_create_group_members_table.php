@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign('member_id')->references('id')->on('users');
             $table->bigInteger('role_id');
             $table->date('joined_at');
-            $table->date('left_at');
+            $table->date('left_at')->nullable();
             $table->timestamps();
         });
     }

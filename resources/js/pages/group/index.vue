@@ -8,16 +8,17 @@ import useEventsBus from '@/eventBus';
 const { emit, bus } = useEventsBus()
 
 const props = defineProps({
-    listdata: Object,
+    data: Object,
     flash: Object,
-    filters: Object
+    filters: Object,
+    types: Object
 })
 
-let search = ref(props.filters.search)
+// let search = ref(props.filters.search)
 let _deleteId = ref('')
 
 function filter() {
-    router.get('/company/hr/vacancy', { search: search.value }, { replace: true, preserveState: true })
+    router.get('/group/item', { search: search.value }, { replace: true, preserveState: true })
 }
 
 function _setSelected(id) {
@@ -27,13 +28,14 @@ function _setSelected(id) {
 
 function confirmDelete() {
     //emit('confirm-loading', true);
-    router.delete(`/company/hr/vacancy/${_deleteId.value}`, { 
+    router.delete(`/group/item/${_deleteId.value}`, { 
         replace: true, 
         preserveState: true,
         onSuccess: () => {
             emit('confirm-row-deleted');
         } });
 }
+
 
 // Listening Event for confirmation.
 watch(() => bus.value.get('confirm-delete'), () => {
@@ -50,11 +52,11 @@ onMounted(() => {
 
 </script>
 <template>
-    <Head :title="$t('hrVacancy')" />      
+    <Head :title="$t('group')" />      
     <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
         <page-title 
-            :title="$t('hrVacancy')"
-            :subtitle="$t('hrVacancyList')" />
+            :title="$t('group')"
+            :subtitle="$t('groupList')" />
         <transition name="fade" mode="out-in" appear>
             <alert 
                 v-if="flash.success"
@@ -82,43 +84,33 @@ onMounted(() => {
                     </form>
                 </div>
                 <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <Link href="/company/hr/vacancy/create" as="button" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                    <Link href="item/create" as="button" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                         <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                         </svg>
-                        {{ $t('hrVacancyAdd') }}
+                        {{ $t('groupAdd') }}
                     </Link>
                 </div>
             </div>
             <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" v-if="listdata.data.length > 0">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" v-if="data.data.length > 0">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-4 py-3">ID</th>
-                            <th scope="col" class="px-4 py-3">{{ $t('hrVacancyName') }}</th>
-                            <th scope="col" class="px-4 py-3">{{ $t('hrVacancySalary') }}</th>
-                            <th scope="col" class="px-4 py-3">{{ $t('hrVacancyCategory') }}</th>                           
-                            <th scope="col" class="px-4 py-3">{{ $t('hrVacancyType') }}</th>
-                            <th scope="col" class="px-4 py-3">{{ $t('hrVacancyJobType') }}</th>
-                            <th scope="col" class="px-4 py-3">{{ $t('hrVacancyCountry') }}</th>
-                            <th scope="col" class="px-4 py-3">{{ $t('hrVacancyCity') }}</th>
-                            <th scope="col" class="px-4 py-3">{{ $t('hrVacancyCustomer') }}</th>                            
+                            <th scope="col" class="px-4 py-3" width="30%">{{ $t('groupName') }}</th>
+                            <th scope="col" class="px-4 py-3">{{ $t('groupFoundedYear') }}</th>
+                            <th scope="col" class="px-4 py-3">{{ $t('groupCreatedAt') }}</th>
                             <th scope="col" class="px-4 py-3">
                                 <span class="sr-only">{{ $t('action') }}</span>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-b dark:border-gray-700" v-for="(item, index) in listdata.data" :key="index">
+                        <tr class="border-b dark:border-gray-700" v-for="(item, index) in data.data" :key="index">
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ item.id }}</th>
                             <td class="px-4 py-3">{{ item.name }}</td>
-                            <td class="px-4 py-3">{{ item.salary }}</td>
-                            <td class="px-4 py-3">{{ item?.category?.name }}</td>
-                            <td class="px-4 py-3">{{ item?.type?.name }}</td>
-                            <td class="px-4 py-3">{{ item?.jobtype?.name }}</td>
-                            <td class="px-4 py-3">{{ item?.country?.name }}</td>
-                            <td class="px-4 py-3">{{ item?.city?.name }}</td>
-                            <td class="px-4 py-3">{{ item?.customer?.name }}</td>
+                            <td class="px-4 py-3">{{ item.founded_year }}</td>
+                            <td class="px-4 py-3">{{ item.created_at }}</td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button 
                                     :id="`hr-cateogry-action-btn-${item.id}`" 
@@ -132,8 +124,8 @@ onMounted(() => {
                                     :id="`action-${item.id}-dropdown`" 
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="apple-imac-27-dropdown-button">
-                                        <!-- <li> <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $t('show') }}</a> </li> -->
-                                        <li> <Link :href="`/company/hr/vacancy/${item.id}/edit`" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $t('edit') }} </Link> </li>
+                                        <li> <Link :href="`/group/item/${item.id}`" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $t('show') }}</Link> </li>
+                                        <li> <Link :href="`/group/item/${item.id}/edit`" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $t('edit') }} </Link> </li>
                                     </ul>
                                     <div class="py-1">
                                         <a href="javascript:void(0)" @click="_setSelected(item.id)" class="block py-2 px-4 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{{ $t('delete') }}</a>
@@ -148,7 +140,7 @@ onMounted(() => {
                 </div>                
             </div>
             <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="table navigation">
-                <pagination :listdata="listdata" v-if="listdata.links.length > 3" />
+                <pagination :data="data" v-if="data.links.length > 3" />
             </nav>
         </div>
     </div>
