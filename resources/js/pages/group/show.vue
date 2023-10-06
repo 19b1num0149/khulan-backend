@@ -2,22 +2,18 @@
     import PageTitle from '@/components/PageTitle.vue';
     import { Link, Head } from '@inertiajs/vue3'; 
     import { Tabs, initFlowbite } from 'flowbite';
+    import member from './modules/member.vue';
+    import event from './modules/event.vue';
     import { ref, onMounted } from 'vue';
-    import people from './modules/people.vue';
-    import activity from './modules/activity.vue';
 
     const props = defineProps({ 
-        flash: Object,
-        item: Object,
-        listtypes: Object,
-        types: Object,
-        categories: Object
+        data: Object,
     })
 
     let _tabs = ref('')
 
     const tabOptions = {
-      defaultTabId: 'people',      
+      defaultTabId: 'member',      
       onShow: () => {
          // console.log('tab is shown');
       }
@@ -27,36 +23,23 @@
             _tabs.value.show(id);
     }
 
-    function _typeName(value) {
-        let name = '';
-        props.types.map((item) => {
-            item.id == value
-            ? name = item.name
-            : null
-        })
-        return name
-    }
-
     onMounted(() => {
         initFlowbite();
 
         const tabElements = [
             {
-                id: 'people',
-                triggerEl: document.querySelector('#people-tab'),
-                targetEl: document.querySelector('#people-tab-content')
+                id: 'member',
+                triggerEl: document.querySelector('#member-tab'),
+                targetEl: document.querySelector('#member-tab-content')
             },
             {
-                id: 'activity',
-                triggerEl: document.querySelector('#activity-tab'),
-                targetEl: document.querySelector('#activity-tab-content')
+                id: 'event',
+                triggerEl: document.querySelector('#event-tab'),
+                targetEl: document.querySelector('#event-tab-content')
             }
         ];
         _tabs.value = new Tabs(tabElements, tabOptions);
     })
-    function printQR() {
-        print();
-    }
 
 </script>
 <style>
@@ -88,22 +71,22 @@
 <template>
 
     <div>
-        <Head :title="item?.name" />
+        <Head :title="data?.name" />
 
         <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
             
             <page-title 
-                :title="item?.name"
+                :title="data?.name"
                 :subtitle="''"></page-title>
 
             <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-4">
 
                 <div class="flex">
-                    <div class="flex-1">
+                    <!-- <div class="flex-1">
                         <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">                          
                             <Link 
                             as="button"
-                            href="/company/temple/item"
+                            href="/company/temple/data"
                             class="px-2 py-2 bg-white border border-transparent focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 rounded-lg dark:bg-gray-800 dark:border-transparent dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                             <svg class="w-4 h-4 text-gray-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"/>
@@ -153,8 +136,8 @@
                             {{ item.company_designed }}
                             </div>
                         </div>
-                    </div>
-                    <!-- {{ item }} -->
+                    </div>  -->
+                    {{ data }}
                 </div>
 
             </div>
@@ -166,40 +149,39 @@
                     <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="tabs" role="tablist">
                         <li class="mr-2" role="presentation">
                             <button  
-                                    id="people-tab" 
+                                    id="member-tab" 
                                     type="button" 
                                     role="tab"
                                     class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    @click="movingTab('people')"
-                                    aria-controls="people-tab-content" 
-                                    aria-selected="false"> {{ $t('templeTabPeople') }} </button>
+                                    @click="movingTab('member')"
+                                    aria-controls="member-tab-content" 
+                                    aria-selected="false"> {{ $t('groupMember') }} </button>
                         </li>
                         <li role="presentation">
                             <button 
-                                    id="activity-tab" 
+                                    id="event-tab" 
                                     type="button" 
                                     role="tab"
                                     class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    @click="movingTab('activity')"
-                                    aria-controls="activity-tab-content" 
-                                    aria-selected="false"> {{ $t('templeTabActivity') }} </button>
-                        </li>                    
+                                    @click="movingTab('event')"
+                                    aria-controls="event-tab-content" 
+                                    aria-selected="false"> {{ $t('groupEvent') }} </button>
+                        </li>
                     </ul>
                 </div>
                 <!-- Tab container -->
                 <div id="tabsContents">
 
-                    <div class="hidden" id="people-tab-content" role="tabpanel" aria-labelledby="people-tab">
-                        <people
-                            key="people"
-                            :itemid="item?.id"
-                            :listtypes="listtypes" />
+                    <div class="hidden" id="member-tab-content" role="tabpanel" aria-labelledby="member-tab">
+                        <member
+                            key="member"
+                             />
                     </div>
 
-                    <div class="hidden" id="activity-tab-content" role="tabpanel" aria-labelledby="activity-tab">
-                        <activity 
-                            key="activity"
-                            :itemid="item?.id" /> 
+                    <div class="hidden" id="event-tab-content" role="tabpanel" aria-labelledby="event-tab">
+                        <event 
+                            key="event"
+                             /> 
                     </div>
 
                 </div>
