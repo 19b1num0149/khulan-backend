@@ -23,13 +23,18 @@ class RegisterController extends Controller
             'password' => ['required', new StrongPassword],
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
-            'phone' => $request->phone]);
+            'phone' => $request->phone,
+            'role_id' => 3
+        ]);
 
-        return response()->json(['msg' => 'Амжилттай бүртэглээ.'], 200);
+        return response()->json([
+            'msg' => 'Амжилттай бүртэглээ.',
+            'email' => $user->email
+        ], 200);
     }
 
     public function registerByFacebook(Request $request)
@@ -73,18 +78,17 @@ class RegisterController extends Controller
             ->first();
 
         if ($code == null) {
-            return response()->json(['msg' => 'Код илгээгдээгүй байна.'], 200);
+            return response()->json(['msg' => 'Буруу код байна.'], 422);
         }
 
         if ($code->code == $request->code) {
-            $verification = User::where('email', $request->email)->first();
-            $verification->email_verified_at = Carbon::now();
-            $verification->save();
-
+            // $user = User::where('email', $request->email)->first();
+            // $user->email_verified_at = Carbon::now();
+            // $user->save();
             return response()->json(['msg' => 'Амжилттай.'], 200);
         }
 
-        return response()->json(['msg' => 'Код таарахгүй байна.'], 200);
+        return response()->json(['msg' => 'Код таарахгүй байна.'], 422);
 
     }
 }

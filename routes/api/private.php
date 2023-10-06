@@ -15,6 +15,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/{userid}', [ProfileController::class, 'getUser']);
     Route::post('/{userid}', [ProfileController::class, 'postUser']);
     // Interest
+    Route::get('/{userid}/allinterests', [InterestController::class, 'getAllInterest']);
     Route::get('/{userid}/interests', [InterestController::class, 'getUserInterest']);
     Route::post('/{userid}/interests', [InterestController::class, 'postUserInterest']);
     // Group
