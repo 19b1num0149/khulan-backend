@@ -11,7 +11,7 @@ use App\Events\ResendCode;
 
 class ResendVerificationCodeController extends Controller
 {
-    public function resendCode(Request $request)
+    public function __invoke(Request $request)
     {
         $request->validate([            
             'email' => 'required|email',

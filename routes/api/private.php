@@ -1,6 +1,5 @@
 <?php
 
-// use App\Http\Controllers\Api\Guest\LoginController;
 use App\Http\Controllers\Api\Private\ContentController;
 use App\Http\Controllers\Api\Private\GroupController;
 use App\Http\Controllers\Api\Private\InterestController;
@@ -12,11 +11,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    //Route::post('/logout', [LoginController::class, 'logout']);
     // Profile
     Route::get('/{userid}', [ProfileController::class, 'getUser']);
     Route::post('/{userid}', [ProfileController::class, 'postUser']);
     // Interest
+    Route::get('/{userid}/allinterests', [InterestController::class, 'getAllInterest']);
     Route::get('/{userid}/interests', [InterestController::class, 'getUserInterest']);
     Route::post('/{userid}/interests', [InterestController::class, 'postUserInterest']);
     // Group

@@ -37,14 +37,12 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'birthday',
-        'phone',
         'remember_token',
     ];
 
-    // protected $dispatchesEvents = [
-    //     'created' => UserRegistered::class,
-    // ];
+    protected $dispatchesEvents = [
+        'created' => UserRegistered::class,
+    ];
 
     /**
      * The attributes that should be cast.

@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Country;
-use App\Traits\Helper\HasRegion;
+// use App\Traits\Helper\HasRegion;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class CityController extends Controller
 {
-    use HasRegion;
+    // use HasRegion;
 
     public function index(Request $request): Response
     {
