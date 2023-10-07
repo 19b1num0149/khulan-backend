@@ -10,11 +10,11 @@ class CouponController extends Controller
 {
     public function getCoupons(Request $request)
     {
-        $group_id = $request->group_id;
+        $groupid = $request->groupid;
 
         $coupons = GroupMemberCoupon::with(['group:id,name', 'member:id,name'])
             ->select('id', 'group_id', 'member_id', 'description', 'created_at')
-            ->where('group_id', $group_id)
+            ->where('group_id', $groupid)
             ->orderBy('created_at', 'desc')
             ->simplePaginate(15);
 
