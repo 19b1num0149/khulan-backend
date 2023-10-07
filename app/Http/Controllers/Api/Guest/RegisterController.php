@@ -82,10 +82,10 @@ class RegisterController extends Controller
         }
 
         if ($code->code == $request->code) {
-            // $user = User::where('email', $request->email)->first();
-            // $user->email_verified_at = Carbon::now();
-            // $user->save();
-            return response()->json(['msg' => 'Амжилттай.'], 200);
+            $user = User::where('email', $request->email)->first();
+            $user->email_verified_at = Carbon::now();
+            $user->save();
+            return response()->json(['msg' => 'Амжилттай баталгаажууллаа.'], 200);
         }
 
         return response()->json(['msg' => 'Код таарахгүй байна.'], 422);
