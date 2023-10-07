@@ -5,10 +5,21 @@ namespace app\Http\Controllers\Api\Private;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserInterest;
+use App\Models\Interest;
 use Illuminate\Http\Request;
 
 class InterestController extends Controller
 {
+
+
+    public function getAllInterest()
+    {
+        $interests = Interest::orderBy('description', 'ASC')->get();
+        return response()->json([
+            'msg' => 'Success', 
+            'interests' => $interests], 200);
+    }
+
     public function getUserInterest($user_id)
     {
         $userInterest = UserInterest::where('user_id', $user_id)->get();

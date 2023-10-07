@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->year('founded_year');
+            $table->bigInteger('founded_year');
             $table->text('description');
             $table->bigInteger('user_id');
             $table->json('qr_data');
