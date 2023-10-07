@@ -31,6 +31,9 @@ class ProfileController extends Controller
             $user->name = $request->name;
             $user->phone = $request->phone;
             $user->address = $request->address;
+            $user->birthday = $request->birthday;
+            $user->gender = $request->gender;
+
             $user->save();
 
             return response()->json(['msg' => trans('shared.success')], 200);
