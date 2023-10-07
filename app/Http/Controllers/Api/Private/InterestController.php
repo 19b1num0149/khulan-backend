@@ -22,21 +22,26 @@ class InterestController extends Controller
 
     public function postUserInterest(Request $request, $user_id)
     {
+        UserInterest::where('user_id', $user_id)->delete();
+    
         $user = User::find($user_id);
-        if (! isset($user)) {
+        
+        if (!isset($user)) {
             return response()->json(['msg' => trans('shared.failed')], 422);
         }
-
+    
         $data = $request->validate([
-            'interest_id' => 'required|integer',
+            'interest_ids' => 'required|array',
+            'interest_ids.*' => 'integer', 
         ]);
-
-        $userInterest = new UserInterest();
-        $userInterest->user_id = $user_id;
-        $userInterest->interest_id = $data['interest_id'];
-        $userInterest->save();
-
-        return response()->json(['msg' => 'Success', 'data' => $userInterest], 200);
-
+    
+        foreach ($data['interest_ids'] as $interest_id) {
+            $userInterest = new UserInterest();
+            $userInterest->user_id = $user_id;
+            $userInterest->interest_id = $interest_id;
+            $userInterest->save();
+        }
+    
+        return response()->json(['msg' => 'Success'], 200);
     }
 }
