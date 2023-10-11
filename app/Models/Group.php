@@ -38,7 +38,7 @@ class Group extends Model
     // Local Scopes
     public function scopeFilterName(Builder $query, ?string $name): void
     {
-        if ($strlen($name) > 0) {
+        if (strlen($name) > 0) {
             $query->where('name', 'like', '%'.$name.'%');
         }
 
