@@ -5,9 +5,6 @@ namespace App\Http\Controllers\Api\Guest;
 use App\Http\Controllers\Controller;
 use App\Http\Request\Api\Guest\LoginRequest;
 use App\Models\User;
-use App\Rules\StrongPassword;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
@@ -19,7 +16,7 @@ class LoginController extends Controller
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
             return response()->json([
-                'errors' => ['email' => ['И-мэйл эсвэл нууц үг буруу байна.'] ]
+                'errors' => ['email' => ['И-мэйл эсвэл нууц үг буруу байна.']],
             ], 422);
         }
 
@@ -30,5 +27,4 @@ class LoginController extends Controller
         return response()->json(['token' => $user->createToken($request->device_name)->plainTextToken,
             'profile' => $user], 200);
     }
-
 }

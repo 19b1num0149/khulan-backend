@@ -4,100 +4,89 @@ namespace app\Http\Controllers\Api\Private;
 
 use App\Http\Controllers\Controller;
 use App\Models\Group;
+use App\Models\GroupInterest;
 use App\Models\GroupJoinRequest;
 use App\Models\GroupMember;
-use App\Models\UserPoint;
+use App\Models\UserInterest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class GroupController extends Controller
 {
+    public function getUserGroups(Request $request, $user_id)
+    {
 
-    public function getUserGroups($user_id)
-{
-    // Query to get groups with matching interests
-    $groupsSuggested = Group::select('groups.id', 'name', 'description', 'founded_year')
-        ->selectSub(function ($query) use ($user_id) {
-            $query->selectRaw('COUNT(*)')
-                ->from('group_members')
-                ->whereColumn('group_members.group_id', 'groups.id');
-        }, 'member_count')
-        ->selectSub(function ($query) use ($user_id) {
-            $query->selectRaw('1')
-                ->from('group_members')
-                ->whereColumn('group_members.group_id', 'groups.id')
-                ->where('group_members.member_id', $user_id);
-        }, 'is_member')
-        ->selectSub(function ($query) use ($user_id) {
-            $query->selectRaw('1')
-                ->from('group_join_requests')
-                ->whereColumn('group_join_requests.group_id', 'groups.id')
-                ->where('group_join_requests.user_id', $user_id);
-        }, 'join_request_sent')
-        ->leftJoin('group_members', function ($join) use ($user_id) {
-            $join->on('group_members.group_id', '=', 'groups.id')
-                ->where('group_members.member_id', $user_id);
-        })
-        ->whereExists(function ($query) use ($user_id) {
-            $query->selectRaw(1)
-                ->from('group_interests')
-                ->whereColumn('group_interests.group_id', 'groups.id')
-                ->whereIn('group_interests.interest_id', function ($subquery) use ($user_id) {
-                    $subquery->select('interest_id')
-                        ->from('user_interests')
-                        ->where('user_id', $user_id);
-                });
-        })
-        ->groupBy('groups.id', 'name', 'description', 'founded_year')
-        ->get();
+        $data = [];
 
-    // Query to get all groups, including is_member and join_request_sent columns
-    $allGroups = Group::select('groups.id', 'name', 'description', 'founded_year')
-        ->selectSub(function ($query) {
-            $query->selectRaw('COUNT(*)')
-                ->from('group_members')
-                ->whereColumn('group_members.group_id', 'groups.id');
-        }, 'member_count')
-        ->selectSub(function ($query) use ($user_id) {
-            $query->selectRaw('1')
-                ->from('group_members')
-                ->whereColumn('group_members.group_id', 'groups.id')
-                ->where('group_members.member_id', $user_id);
-        }, 'is_member')
-        ->selectSub(function ($query) use ($user_id) {
-            $query->selectRaw('1')
-                ->from('group_join_requests')
-                ->whereColumn('group_join_requests.group_id', 'groups.id')
-                ->where('group_join_requests.user_id', $user_id);
-        }, 'join_request_sent')
-        ->leftJoin('group_members', function ($join) use ($user_id) {
-            $join->on('group_members.group_id', '=', 'groups.id')
-                ->where('group_members.member_id', $user_id);
-        })
-        ->groupBy('groups.id', 'name', 'description', 'founded_year')
-        ->get();
+        if ($request->has('name') && strlen($request->name) > 0) {
 
-    $responseData = [
-        "msg" => "Success",
-        "suggests" => $groupsSuggested,
-        "allGroups" => $allGroups,
-    ];
+            $groups = Group::withCount(['members'])->FilterName($request->name)->limit(10)->get();
 
-    return response()->json($responseData, 200);
-}
+            if ($groups->count() > 0) {
+                foreach ($groups as $group) {
+                    $data[] = (object) [
+                        'id' => $group->id,
+                        'name' => $group->name,
+                        'logo' => $group->picture,
+                        'description' => $group->description,
+                        'founded' => $group->founded_year,
+                        'members' => $group->members_count,
+                    ];
+                }
+            }
 
+        } else {
+
+            // Empty state ( array )
+            $interests = [];
+
+            // Getting user by auth from request ;
+            $userid = $request->user()->id;
+            // Users interests
+            $interestData = UserInterest::where('user_id', $userid)->get();
+            if ($interestData->count() > 0) {
+                foreach ($interestData as $item) {
+                    $interests[] = $item->interest_id;
+                }
+            }
+
+            // Find for suggestions
+            $groups = GroupInterest::with(['group.members'])->whereIn('interest_id', $interests)->limit('10')->get();
+
+            if ($groups->count() > 0) {
+                foreach ($groups as $item) {
+                    $data[] = (object) [
+                        'id' => $item->group?->id,
+                        'name' => $item->group?->name,
+                        'logo' => $item->group?->picture,
+                        'description' => $item->group?->description,
+                        'founded' => $item->group?->founded_year,
+                        'members' => $item->group->members->count(),
+                    ];
+                }
+            }
+
+        }
+
+        $responseData = [
+            'msg' => 'Success',
+            'data' => $data,
+        ];
+
+        return response()->json($responseData, 200);
+    }
 
     public function getJoinedGroupOfUser($user_id, $group_id)
     {
         $rankedUserPoints = DB::table('user_points')
-        ->select(['user_id', 'point', DB::raw('DENSE_RANK() OVER (PARTITION BY group_id ORDER BY point DESC) AS `rank`')])
-        ->where('group_id', $group_id);
-    
+            ->select(['user_id', 'point', DB::raw('DENSE_RANK() OVER (PARTITION BY group_id ORDER BY point DESC) AS `rank`')])
+            ->where('group_id', $group_id);
+
         $rank = DB::table(DB::raw("({$rankedUserPoints->toSql()}) as RankedUserPoints"))
             ->mergeBindings($rankedUserPoints)
             ->select('point', DB::raw('`rank`'))
             ->where('user_id', $user_id)
             ->get();
-
 
         $memberCount = GroupMember::where('group_id', $group_id)->count();
 
@@ -121,17 +110,16 @@ class GroupController extends Controller
         $existingJoinRequest = GroupJoinRequest::where('user_id', $user_id)
             ->where('group_id', $group_id)
             ->first();
-    
+
         if ($existingJoinRequest) {
             $existingJoinRequest->delete();
         }
-    
+
         $joinRequest = new GroupJoinRequest();
         $joinRequest->user_id = $user_id;
         $joinRequest->group_id = $group_id;
         $joinRequest->save();
-    
+
         return response()->json(['msg' => 'Хүсэлт амжилттай илгээгдлээ.'], 200);
     }
-    
 }
