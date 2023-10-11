@@ -3,18 +3,15 @@
 namespace App\Http\Controllers\Api\Guest;
 
 use App\Http\Controllers\Controller;
-use App\Http\Request\Api\Guest\LoginRequest;
 use App\Models\User;
 use App\Rules\StrongPassword;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 
 class RegisterController extends Controller
 {
-
     public function registerByEmail(Request $request)
     {
         $request->validate([
@@ -28,40 +25,39 @@ class RegisterController extends Controller
             'email' => $request->email,
             'password' => $request->password,
             'phone' => $request->phone,
-            'role_id' => 3
+            'role_id' => 3,
         ]);
 
         return response()->json([
             'msg' => 'Амжилттай бүртэглээ.',
-            'email' => $user->email
+            'email' => $user->email,
         ], 200);
     }
 
     public function registerByFacebook(Request $request)
     {
         try {
-        
+
             $user = Socialite::driver('facebook')->user();
-         
+
             $finduser = User::where('fb_id', $user->id)->first();
-         
-            if($finduser){
-         
+
+            if ($finduser) {
+
                 return response()->json(['token' => $finduser->createToken($finduser->id)->plainTextToken,
-                                         'profile' => $user], 200);
-         
-            }else{
-                $newUser = User::updateOrCreate(['email' => $user->email],[
-                        'name' => $user->name,
-                        'fb_id'=> $user->id,
-                        'password' => encrypt('123456@facebook')
-                    ]);
-        
-        
+                    'profile' => $user], 200);
+
+            } else {
+                $newUser = User::updateOrCreate(['email' => $user->email], [
+                    'name' => $user->name,
+                    'fb_id' => $user->id,
+                    'password' => encrypt('123456@facebook'),
+                ]);
+
                 return response()->json(['token' => $newUser->createToken($newUser->id)->plainTextToken,
-                                         'profile' => $newUser], 200);
+                    'profile' => $newUser], 200);
             }
-       
+
         } catch (Exception $e) {
             // dd($e->getMessage());
         }
@@ -82,10 +78,11 @@ class RegisterController extends Controller
         }
 
         if ($code->code == $request->code) {
-            // $user = User::where('email', $request->email)->first();
-            // $user->email_verified_at = Carbon::now();
-            // $user->save();
-            return response()->json(['msg' => 'Амжилттай.'], 200);
+            $user = User::where('email', $request->email)->first();
+            $user->email_verified_at = Carbon::now();
+            $user->save();
+
+            return response()->json(['msg' => 'Амжилттай баталгаажууллаа.'], 200);
         }
 
         return response()->json(['msg' => 'Код таарахгүй байна.'], 422);

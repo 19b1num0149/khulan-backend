@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\Guest\CheckTokenController;
 use App\Http\Controllers\Api\Guest\LoginController;
 use App\Http\Controllers\Api\Guest\RegisterController;
-use App\Http\Controllers\Api\Guest\CheckTokenController;
 use App\Http\Controllers\Api\Guest\ResendVerificationCodeController;
 use Illuminate\Support\Facades\Route;
 

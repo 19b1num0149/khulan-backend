@@ -6,10 +6,6 @@ use App\Http\Controllers\Company\Hr\HrCustomerController;
 use App\Http\Controllers\Company\Hr\HrJobTypeController;
 use App\Http\Controllers\Company\Hr\HrTypeController;
 use App\Http\Controllers\Company\Hr\HrVacancyController;
-use App\Http\Controllers\Company\Temple\QrCategoryController as TempleQrCategoryController;
-use App\Http\Controllers\Company\Temple\QrItemActivityController;
-use App\Http\Controllers\Company\Temple\QrItemController as TempleQrItemController;
-use App\Http\Controllers\Company\Temple\QrItemPersonController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Group\GroupController;
 use App\Http\Controllers\Group\GroupMemberController;
@@ -37,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('group')->group(function () {
         Route::resource('/item', GroupController::class);
-        Route::resource('item.member',GroupMemberController::class)->except(['show', 'create', 'edit']);
+        Route::resource('item.member', GroupMemberController::class)->except(['show', 'create', 'edit']);
     });
 
     // Route::prefix('company')->group(function () {
