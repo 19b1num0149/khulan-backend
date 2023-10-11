@@ -22,7 +22,7 @@ class AuthController extends Controller
         $credentials = [
             'email' => $request->email,
             'password' => $request->password,
-            
+
         ];
 
         if (Auth::attempt($credentials)) {

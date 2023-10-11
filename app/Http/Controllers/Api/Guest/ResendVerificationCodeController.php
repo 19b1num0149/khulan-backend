@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers\Api\Guest;
 
+use App\Events\ResendCode;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
-use App\Http\Controllers\Controller;
-use App\Events\ResendCode;
-
 
 class ResendVerificationCodeController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $request->validate([            
+        $request->validate([
             'email' => 'required|email',
         ]);
 
@@ -22,5 +20,4 @@ class ResendVerificationCodeController extends Controller
 
         return response()->json(['message' => trans('auth.success_resend_code')], 200);
     }
-
 }

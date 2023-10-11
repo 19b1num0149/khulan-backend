@@ -12,12 +12,12 @@ class ProfileController extends Controller
     {
 
         $user = User::find($userid);
-        if (!isset($user)) {
+        if (! isset($user)) {
             return response()->json(['msg' => trans('shared.failed')], 422);
         }
 
         return response()->json([
-            'msg' => trans('shared.success'), 
+            'msg' => trans('shared.success'),
             'user' => $user], 200);
     }
 

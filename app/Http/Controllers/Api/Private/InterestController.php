@@ -3,20 +3,19 @@
 namespace app\Http\Controllers\Api\Private;
 
 use App\Http\Controllers\Controller;
+use App\Models\Interest;
 use App\Models\User;
 use App\Models\UserInterest;
-use App\Models\Interest;
 use Illuminate\Http\Request;
 
 class InterestController extends Controller
 {
-
-
     public function getAllInterest()
     {
         $interests = Interest::orderBy('description', 'ASC')->get();
+
         return response()->json([
-            'msg' => 'Success', 
+            'msg' => 'Success',
             'interests' => $interests], 200);
     }
 
@@ -34,25 +33,25 @@ class InterestController extends Controller
     public function postUserInterest(Request $request, $user_id)
     {
         UserInterest::where('user_id', $user_id)->delete();
-    
+
         $user = User::find($user_id);
-        
-        if (!isset($user)) {
+
+        if (! isset($user)) {
             return response()->json(['msg' => trans('shared.failed')], 422);
         }
-    
+
         $data = $request->validate([
             'interest_ids' => 'required|array',
-            'interest_ids.*' => 'integer', 
+            'interest_ids.*' => 'integer',
         ]);
-    
+
         foreach ($data['interest_ids'] as $interest_id) {
             $userInterest = new UserInterest();
             $userInterest->user_id = $user_id;
             $userInterest->interest_id = $interest_id;
             $userInterest->save();
         }
-    
+
         return response()->json(['msg' => 'Success'], 200);
     }
 }

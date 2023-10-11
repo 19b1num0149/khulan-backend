@@ -8,7 +8,6 @@ use App\Http\Request\Group\StoreGroupRequest;
 use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -50,8 +49,9 @@ class GroupController extends Controller
     }
 
     public function show(Request $request, $id): Response
-    {   
+    {
         $data = Group::with('user')->findOrFail($id);
+
         return Inertia::render('group/show', [
             'data' => $data,
         ]);
@@ -70,7 +70,7 @@ class GroupController extends Controller
         return Inertia::render('group/edit', [
             'users' => $users,
             'group' => $group,
-            'prev' => $prev
+            'prev' => $prev,
         ]);
     }
 
