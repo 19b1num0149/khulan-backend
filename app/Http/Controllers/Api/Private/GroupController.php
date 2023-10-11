@@ -11,26 +11,80 @@ use Illuminate\Support\Facades\DB;
 
 class GroupController extends Controller
 {
+
     public function getUserGroups($user_id)
-    {
-        $userGroups = Group::select( 'name', 'description', 'founded_year')
+{
+    // Query to get groups with matching interests
+    $groupsSuggested = Group::select('groups.id', 'name', 'description', 'founded_year')
+        ->selectSub(function ($query) use ($user_id) {
+            $query->selectRaw('COUNT(*)')
+                ->from('group_members')
+                ->whereColumn('group_members.group_id', 'groups.id');
+        }, 'member_count')
+        ->selectSub(function ($query) use ($user_id) {
+            $query->selectRaw('1')
+                ->from('group_members')
+                ->whereColumn('group_members.group_id', 'groups.id')
+                ->where('group_members.member_id', $user_id);
+        }, 'is_member')
+        ->selectSub(function ($query) use ($user_id) {
+            $query->selectRaw('1')
+                ->from('group_join_requests')
+                ->whereColumn('group_join_requests.group_id', 'groups.id')
+                ->where('group_join_requests.user_id', $user_id);
+        }, 'join_request_sent')
+        ->leftJoin('group_members', function ($join) use ($user_id) {
+            $join->on('group_members.group_id', '=', 'groups.id')
+                ->where('group_members.member_id', $user_id);
+        })
+        ->whereExists(function ($query) use ($user_id) {
+            $query->selectRaw(1)
+                ->from('group_interests')
+                ->whereColumn('group_interests.group_id', 'groups.id')
+                ->whereIn('group_interests.interest_id', function ($subquery) use ($user_id) {
+                    $subquery->select('interest_id')
+                        ->from('user_interests')
+                        ->where('user_id', $user_id);
+                });
+        })
+        ->groupBy('groups.id', 'name', 'description', 'founded_year')
+        ->get();
+
+    // Query to get all groups, including is_member and join_request_sent columns
+    $allGroups = Group::select('groups.id', 'name', 'description', 'founded_year')
         ->selectSub(function ($query) {
             $query->selectRaw('COUNT(*)')
                 ->from('group_members')
                 ->whereColumn('group_members.group_id', 'groups.id');
         }, 'member_count')
-
-        ->join('group_members', 'group_members.group_id', '=', 'groups.id')
-        ->where('group_members.member_id', '=', $user_id)
-        ->groupBy('groups.id')
+        ->selectSub(function ($query) use ($user_id) {
+            $query->selectRaw('1')
+                ->from('group_members')
+                ->whereColumn('group_members.group_id', 'groups.id')
+                ->where('group_members.member_id', $user_id);
+        }, 'is_member')
+        ->selectSub(function ($query) use ($user_id) {
+            $query->selectRaw('1')
+                ->from('group_join_requests')
+                ->whereColumn('group_join_requests.group_id', 'groups.id')
+                ->where('group_join_requests.user_id', $user_id);
+        }, 'join_request_sent')
+        ->leftJoin('group_members', function ($join) use ($user_id) {
+            $join->on('group_members.group_id', '=', 'groups.id')
+                ->where('group_members.member_id', $user_id);
+        })
+        ->groupBy('groups.id', 'name', 'description', 'founded_year')
         ->get();
 
-        if ($userGroups->isEmpty()) {
-            return response()->json(['msg' => 'Хэрэглэгч бүлгэмд элсээгүй байна.'], 404);
-        }
+    $responseData = [
+        "msg" => "Success",
+        "suggests" => $groupsSuggested,
+        "allGroups" => $allGroups,
+    ];
 
-        return response()->json(['msg' => 'Success', 'data' => $userGroups], 200);
-    }
+    return response()->json($responseData, 200);
+}
+
 
     public function getJoinedGroupOfUser($user_id, $group_id)
     {
@@ -64,11 +118,20 @@ class GroupController extends Controller
 
     public function createGroupJoinRequest($user_id, $group_id)
     {
+        $existingJoinRequest = GroupJoinRequest::where('user_id', $user_id)
+            ->where('group_id', $group_id)
+            ->first();
+    
+        if ($existingJoinRequest) {
+            $existingJoinRequest->delete();
+        }
+    
         $joinRequest = new GroupJoinRequest();
         $joinRequest->user_id = $user_id;
         $joinRequest->group_id = $group_id;
         $joinRequest->save();
-
+    
         return response()->json(['msg' => 'Хүсэлт амжилттай илгээгдлээ.'], 200);
     }
+    
 }
