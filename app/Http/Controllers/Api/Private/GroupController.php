@@ -16,14 +16,19 @@ class GroupController extends Controller
     public function getUserGroups(Request $request, $user_id)
     {
 
+        // Getting user by auth from request ;
+        $userid = $request->user()->id;
         $data = [];
 
         if ($request->has('name') && strlen($request->name) > 0) {
-
             $groups = Group::withCount(['members'])->FilterName($request->name)->limit(10)->get();
 
             if ($groups->count() > 0) {
                 foreach ($groups as $group) {
+                    $joined_at = GroupMember::where('member_id', $userid)
+                        ->where('group_id', $group->id)
+                        ->value('joined_at');
+
                     $data[] = (object) [
                         'id' => $group->id,
                         'name' => $group->name,
@@ -31,17 +36,16 @@ class GroupController extends Controller
                         'description' => $group->description,
                         'founded' => $group->founded_year,
                         'members' => $group->members_count,
+                        'joined_at' => $joined_at,
                     ];
                 }
             }
-
         } else {
 
             // Empty state ( array )
             $interests = [];
 
-            // Getting user by auth from request ;
-            $userid = $request->user()->id;
+
             // Users interests
             $interestData = UserInterest::where('user_id', $userid)->get();
             if ($interestData->count() > 0) {
@@ -51,7 +55,13 @@ class GroupController extends Controller
             }
 
             // Find for suggestions
-            $groups = GroupInterest::with(['group.members'])->whereIn('interest_id', $interests)->limit('10')->get();
+            $groups = GroupInterest::with(['group.members'])
+                ->whereIn('interest_id', $interests)
+                ->select('group_id') 
+                ->groupBy('group_id') 
+                ->limit(10)
+                ->get();
+
 
             if ($groups->count() > 0) {
                 foreach ($groups as $item) {
@@ -65,7 +75,6 @@ class GroupController extends Controller
                     ];
                 }
             }
-
         }
 
         $responseData = [
@@ -108,14 +117,14 @@ class GroupController extends Controller
     public function createGroupJoinRequest($member_id, $group_id)
     {
 
-        if($member_id !== '' && $group_id !== '') {
+        if ($member_id !== '' && $group_id !== '') {
 
             $group = GroupMember::where('group_id', $group_id)
                 ->where('member_id', $member_id)
                 ->orderBy('id', 'DESC')
                 ->first();
 
-            if(isset($group)) {
+            if (isset($group)) {
                 return response()->json([
                     'message' => 'You have sent request already',
                     'errors' => ['already' => ['Joined']]
@@ -131,22 +140,8 @@ class GroupController extends Controller
 
             return response()->json([
                 'message' => 'Амжилттай хүсэлт илгээлээ'
-            ], 200)
-
+            ], 200);
         }
-
-        // $existingJoinRequest = GroupJoinRequest::where('user_id', $user_id)
-        //     ->where('group_id', $group_id)
-        //     ->first();
-
-        // if ($existingJoinRequest) {
-        //     $existingJoinRequest->delete();
-        // }
-
-        // $joinRequest = new GroupJoinRequest();
-        // $joinRequest->user_id = $user_id;
-        // $joinRequest->group_id = $group_id;
-        // $joinRequest->save();
 
         return response()->json(['msg' => 'Хүсэлт амжилттай илгээгдлээ.'], 200);
     }
