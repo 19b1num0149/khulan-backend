@@ -105,20 +105,48 @@ class GroupController extends Controller
         return response()->json(['msg' => 'Success', 'data' => $result], 200);
     }
 
-    public function createGroupJoinRequest($user_id, $group_id)
+    public function createGroupJoinRequest($member_id, $group_id)
     {
-        $existingJoinRequest = GroupJoinRequest::where('user_id', $user_id)
-            ->where('group_id', $group_id)
-            ->first();
 
-        if ($existingJoinRequest) {
-            $existingJoinRequest->delete();
+        if($member_id !== '' && $group_id !== '') {
+
+            $group = GroupMember::where('group_id', $group_id)
+                ->where('member_id', $member_id)
+                ->orderBy('id', 'DESC')
+                ->first();
+
+            if(isset($group)) {
+                return response()->json([
+                    'message' => 'You have sent request already',
+                    'errors' => ['already' => ['Joined']]
+                ], 422);
+            }
+
+            // Writing Join Request
+            $join = new GroupMember;
+            $join->group_id = $group_id;
+            $join->member_id = $member_id;
+            $join->role_id = '2';
+            $join->save();
+
+            return response()->json([
+                'message' => 'Амжилттай хүсэлт илгээлээ'
+            ], 200)
+
         }
 
-        $joinRequest = new GroupJoinRequest();
-        $joinRequest->user_id = $user_id;
-        $joinRequest->group_id = $group_id;
-        $joinRequest->save();
+        // $existingJoinRequest = GroupJoinRequest::where('user_id', $user_id)
+        //     ->where('group_id', $group_id)
+        //     ->first();
+
+        // if ($existingJoinRequest) {
+        //     $existingJoinRequest->delete();
+        // }
+
+        // $joinRequest = new GroupJoinRequest();
+        // $joinRequest->user_id = $user_id;
+        // $joinRequest->group_id = $group_id;
+        // $joinRequest->save();
 
         return response()->json(['msg' => 'Хүсэлт амжилттай илгээгдлээ.'], 200);
     }
