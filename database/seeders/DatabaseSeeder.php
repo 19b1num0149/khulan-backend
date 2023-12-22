@@ -36,21 +36,21 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         // Group::factory(5)->create();
         // Permission::factory(5)->create();
-        // Invoice::factory(3)->create();
-        // Activity::factory(3)->create();
-        // Content::factory(4)->create();
+        Invoice::factory(3)->create();
+        Activity::factory(3)->create();
+        Content::factory(4)->create();
         // GroupMember::factory(10)->create();
         // GroupMemberCoupon::factory(3)->create();
-        // UserPoint::factory(4)->create();
+        UserPoint::factory(4)->create();
         // GroupInterest::factory(4)->create();
         // Interest::factory(4)->create();
-        // GroupEventItinerary::factory(3)->create();
-        // GroupEvent::factory(3)->create();
+        GroupEventItinerary::factory(3)->create();
+        GroupEvent::factory(3)->create();
         // Notification::factory(3)->create();
         // UserService::factory(3)->create();
-        UserInterest::factory(5)->create();
+        // UserInterest::factory(5)->create();
         // UserSettings::factory(5)->create();
-        // GroupEventMember::factory(5)->create();
+        GroupEventMember::factory(5)->create();
 
     }
 }
