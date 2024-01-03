@@ -22,7 +22,6 @@ return new class extends Migration
             $table->char('gender', 10)->nullable();
             $table->bigInteger('role_id');
             $table->string('password');
-            $table->string("picture")->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
