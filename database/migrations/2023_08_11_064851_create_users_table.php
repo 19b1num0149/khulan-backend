@@ -20,7 +20,6 @@ return new class extends Migration
             $table->tinyText('address')->nullable();
             $table->date('birthday')->nullable();
             $table->char('gender', 10)->nullable();
-            $table->bigInteger('role_id');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

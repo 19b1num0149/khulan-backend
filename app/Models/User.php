@@ -27,7 +27,6 @@ class User extends Authenticatable
         'address',
         'birthday',
         'gender',
-        'role_id',
     ];
 
     /**
@@ -54,23 +53,23 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
+    // public function role()
+    // {
+    //     return $this->belongsTo(Role::class);
+    // }
 
-    public function events()
-    {
-        return $this->hasMany(GroupEvent::class, 'creator_id');
-    }
+    // public function events()
+    // {
+    //     return $this->hasMany(GroupEvent::class, 'creator_id');
+    // }
 
-    public function groupMembers()
-    {
-        return $this->hasMany(GroupMember::class, 'member_id', 'id');
-    }
+    // public function groupMembers()
+    // {
+    //     return $this->hasMany(GroupMember::class, 'member_id', 'id');
+    // }
 
-    public function userPoints()
-    {
-        return $this->hasMany(UserPoint::class, 'user_id', 'id');
-    }
+    // public function userPoints()
+    // {
+    //     return $this->hasMany(UserPoint::class, 'user_id', 'id');
+    // }
 }

@@ -18,8 +18,9 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "@inertiajs/vue3": "^1.0.8",        
+        "@inertiajs/vue3": "^1.0.8",
         "mitt": "^3.0.1",
+        "react-native-maps": "^1.14.0",
         "sass": "^1.63.5",
         "vue": "^3.3.4",
         "vue-i18n": "^9.2.2"

@@ -12,11 +12,11 @@ class LoginController extends Controller
 {
     public function authenticate(LoginRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('phone', $request->phone)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
-                'errors' => ['email' => ['И-мэйл эсвэл нууц үг буруу байна.']],
+                'errors' => ['phone' => ['И-мэйл эсвэл нууц үг буруу байна.']],
             ], 422);
         }
 
@@ -33,7 +33,7 @@ class LoginController extends Controller
 
     private function checkProfileCompleteness($user)
     {
-        $requiredFields = ['name', 'email', 'phone', 'address', 'birthday', 'gender'];
+        $requiredFields = ['name', 'phone', 'phone', 'address', 'birthday', 'gender'];
 
         $interestsCount = UserInterest::where('user_id', $user->id)->count();
 
