@@ -7,34 +7,21 @@ use App\Http\Controllers\Api\Private\NotificationController;
 use App\Http\Controllers\Api\Private\PaymentController;
 use App\Http\Controllers\Api\Private\ProfileController;
 use App\Http\Controllers\Api\Private\SettingsController;
+
+use App\Http\Controllers\Api\Private\ParkingController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    // Profile
-    Route::get('/{userid}', [ProfileController::class, 'getUser']);
-    Route::post('/{userid}', [ProfileController::class, 'postUser']);
-    // Interest
-    Route::get('/{userid}/allinterests', [InterestController::class, 'getAllInterest']);
-    Route::get('/{userid}/interests', [InterestController::class, 'getUserInterest']);
-    Route::post('/{userid}/interests', [InterestController::class, 'postUserInterest']);
-    // Group
-    Route::get('/{userid}/groups', [GroupController::class, 'getUserGroups']);
-    Route::get('/{userid}/groups/{groupid}', [GroupController::class, 'getJoinedGroupOfUser']);
-    Route::post('/{userid}/groups/{groupid}', [GroupController::class, 'createGroupJoinRequest']);
-    // Settings
-    Route::get('/user/settings', [SettingsController::class, 'getData']);
-    Route::post('/user/settings', [SettingsController::class, 'store']);
 
-    // Notification
-    Route::get('/user/notification', [NotificationController::class, 'getData']);
-    Route::post('/user/notification/{id}', [NotificationController::class, 'read']);
-
-    // Payment
-    Route::get('/user/payment', [PaymentController::class, 'getData']);
-    Route::get('/user/payment/{id}', [PaymentController::class, 'view']);
-
-    // Content
-    Route::get('/user/content/{id}', [ContentController::class, 'getData']);
+    //get all parkings
+    Route::get('/parking', [ParkingController::class, 'getAllParkings']);
+    Route::get('/parking/{parkingid}', [ParkingController::class, 'getSinglePark']);
+    Route::post('/parking/order/{parkingId}', [ParkingController::class, 'order']);
+    Route::get('/parking/order/detail/get', [ParkingController::class, 'getOrder']);
+    Route::post('/pay/{orderid}', [ParkingController::class, 'pay']);
+    Route::get('/user/history', [ParkingController::class, 'history']);
+    Route::get('/user', [ParkingController::class, 'getUser']);
 
 });

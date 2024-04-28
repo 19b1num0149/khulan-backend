@@ -16,34 +16,18 @@ class LoginController extends Controller
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
-                'errors' => ['phone' => ['И-мэйл эсвэл нууц үг буруу байна.']],
+                'errors' => ['phone' => ['Утасны дугаар эсвэл нууц үг буруу байна.']],
             ], 422);
         }
 
-        $profileCompleteness = $this->checkProfileCompleteness($user);
 
         return response()->json([
             'token' => $user->createToken($request->device_name)->plainTextToken,
             'profile' => [
                 'user' => $user,
-                'is_complete' => $profileCompleteness,
             ],
         ], 200);
     }
 
-    private function checkProfileCompleteness($user)
-    {
-        $requiredFields = ['name', 'phone', 'phone', 'address', 'birthday', 'gender'];
-
-        $interestsCount = UserInterest::where('user_id', $user->id)->count();
-
-        foreach ($requiredFields as $field) {
-            if (empty($user->{$field})) {
-                return false;
-            }
-        }
-
-        return ($interestsCount >= 3);
-    }
 }
 

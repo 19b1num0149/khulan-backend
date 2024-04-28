@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Events\UserRegistered;
+use App\Models\UserCar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-// use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Carbon\Carbon; // Import Carbon for date/time operations
 
 class User extends Authenticatable
 {
@@ -39,10 +39,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $dispatchesEvents = [
-        'created' => UserRegistered::class,
-    ];
-
     /**
      * The attributes that should be cast.
      *
@@ -53,23 +49,63 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // public function role()
-    // {
-    //     return $this->belongsTo(Role::class);
-    // }
+    public function parkingCars()
+    {
+        return $this->hasMany(ParkingCar::class);
+    }
 
-    // public function events()
-    // {
-    //     return $this->hasMany(GroupEvent::class, 'creator_id');
-    // }
-
-    // public function groupMembers()
-    // {
-    //     return $this->hasMany(GroupMember::class, 'member_id', 'id');
-    // }
-
-    // public function userPoints()
-    // {
-    //     return $this->hasMany(UserPoint::class, 'user_id', 'id');
-    // }
+    public function getInvoice()
+    {
+        $invoices1 = $this->parkingCars()->where('is_active', 1);
+        $invoices2 = $this->parkingCars()->where('is_active', 1);
+        $invoices3 = $this->parkingCars()->where('is_active', 1);
+    
+        $ordered = $invoices1->whereNotNull('ordered_at')
+                              ->whereNull('parked_at')
+                              ->whereNull('paid_at')
+                              ->whereNull('order_cancelled_at')
+                              ->first();
+    
+        
+        $parked = $invoices3->whereNotNull('parked_at')
+                           ->whereNull('paid_at')
+                           ->first();
+            
+        $cancelCost = 0;
+            if ($parked) {
+            $orderCost = 0;
+            $orderDuration = 0;
+            
+            if ($parked->ordered_at) {
+                $orderTime = Carbon::parse($parked->ordered_at);
+                $parkedTime = Carbon::parse($parked->parked_at);
+                $orderDuration = $orderTime->diffInMinutes($parkedTime);
+                $orderCost = $orderDuration * 50;
+            }
+    
+            $parkedTime = Carbon::parse($parked->parked_at);
+            $currentTime = Carbon::now();
+            $parkedDuration = $parkedTime->diffInMinutes($currentTime);
+            $parkedCost = ($parkedDuration * $parked->parking->payment_per_hour / 60); 
+            return [
+                'car_number' => $parked->car_number ?? null,
+                'order_duration' => $orderDuration,
+                'order_cost' => $orderCost,
+                'parked_duration' => $parkedDuration,
+                'parked_cost' => $parkedCost,
+                'total_cost' => $parkedCost + $orderCost
+            ];
+        } elseif ($ordered) {
+            $orderTime = Carbon::parse($ordered->ordered_at);
+            $cancelTime = Carbon::parse($ordered->order_cancelled_at);
+            $orderDuration = $orderTime->diffInMinutes($cancelTime);
+            $cancelCost = $orderDuration * 50;
+            return [
+                'car_number' => $ordered->car_number ?? null,
+                'order_duration' => $orderDuration,
+                'order_cost' => $cancelCost,
+            ];
+        }
+    }
+    
 }

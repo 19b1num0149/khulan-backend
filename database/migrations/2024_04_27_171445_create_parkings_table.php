@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_verifications', function (Blueprint $table) {
+        Schema::create('parkings', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
-            $table->string('code', 50);
-            $table->dateTime('used_at')->nullable();
-            $table->dateTime('expired_at');
+            $table->string("name");
+            $table->time('opening_time');
+            $table->time('closing_time');
+            $table->integer("payment_per_hour");
+            $table->integer("capacity");
+            $table->float("lan");
+            $table->float("lon");
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_verifications');
+        Schema::dropIfExists('parkings');
     }
 };
