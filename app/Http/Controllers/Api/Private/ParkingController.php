@@ -58,6 +58,7 @@ class ParkingController extends Controller
         $parking = Parking::findOrFail($parkingId);
     
         $order = ParkingCar::create([
+        
             'user_id' => $user->id,
             'parking_id' => $parking->id,
             'car_number' => $request->car_number,
@@ -105,6 +106,27 @@ class ParkingController extends Controller
     {
         return Auth::user();
     }
+
+    
+public function updateUser(Request $request)
+{
+    // Retrieve the authenticated user
+    $user = Auth::user();
+
+    // Validate the incoming request data
+    $request->validate([
+        'phone' => 'required|string', // Add any validation rules as needed
+    ]);
+
+    // Update the phone number
+    $user->phone = $request->input('phone');
+
+    // Save the changes to the database
+    $user->save();
+
+    // Optionally, you can return a response to indicate success or redirect the user
+    return response()->json(['message' => 'Phone number updated successfully']);
+}
     
 
 }

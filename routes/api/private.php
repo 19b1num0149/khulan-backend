@@ -23,5 +23,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/pay/{orderid}', [ParkingController::class, 'pay']);
     Route::get('/user/history', [ParkingController::class, 'history']);
     Route::get('/user', [ParkingController::class, 'getUser']);
+    Route::post('/edituser', [ParkingController::class, 'updateUser']);
 
 });

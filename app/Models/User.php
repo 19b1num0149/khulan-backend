@@ -88,6 +88,7 @@ class User extends Authenticatable
             $parkedDuration = $parkedTime->diffInMinutes($currentTime);
             $parkedCost = ($parkedDuration * $parked->parking->payment_per_hour / 60); 
             return [
+                'id' => $parked->id,
                 'car_number' => $parked->car_number ?? null,
                 'order_duration' => $orderDuration,
                 'order_cost' => $orderCost,
@@ -101,6 +102,7 @@ class User extends Authenticatable
             $orderDuration = $orderTime->diffInMinutes($cancelTime);
             $cancelCost = $orderDuration * 50;
             return [
+                'id' => $ordered->id,
                 'car_number' => $ordered->car_number ?? null,
                 'order_duration' => $orderDuration,
                 'order_cost' => $cancelCost,
